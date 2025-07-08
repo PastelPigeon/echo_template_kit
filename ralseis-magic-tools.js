@@ -233,6 +233,22 @@
             opcode: 'clearFontCache',
             blockType: Scratch.BlockType.COMMAND,
             text: '清除字体缓存'
+          },
+          {
+            opcode: 'power',
+            blockType: Scratch.BlockType.REPORTER,
+            text: '计算 [A] 的 [B] 次方',
+            iconURI: blockIcons.power,
+            arguments: {
+              A: {
+                type: Scratch.ArgumentType.NUMBER,
+                defaultValue: 2
+              },
+              B: {
+                type: Scratch.ArgumentType.NUMBER,
+                defaultValue: 3
+              }
+            }
           }
         ],
         menus: {
@@ -647,6 +663,25 @@
         pushTextTokens();
         
         return tokens;
+    }
+
+    power(args) {
+      const base = Number(args.A);
+      const exponent = Number(args.B);
+      
+      // 处理特殊情况
+      if (base === 0 && exponent === 0) {
+        // 0^0在数学上未定义，返回NaN
+        return NaN;
+      }
+      
+      // 处理负指数
+      if (exponent < 0) {
+        return 1 / Math.pow(base, -exponent);
+      }
+      
+      // 使用Math.pow计算次方
+      return Math.pow(base, exponent);
     }
   }
   
