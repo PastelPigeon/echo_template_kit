@@ -427,99 +427,126 @@
     }
     
     parseBBCodeToTokens(bbcode) {
-      const tokens = [];
-      let currentEffects = [];
-      let stack = [];
-      let currentText = '';
-      let i = 0;
-      
-      const pushTextTokens = () => {
-        if (currentText.length === 0) return;
+        const tokens = [];
+        let currentEffects = [];
+        let stack = [];  // 存储标签和唯一ID的栈
+        let currentText = '';
+        let i = 0;
+        let tagId = 0;   // 用于生成唯一ID
         
-        for (const char of currentText) {
-          tokens.push({
-            char: char,
-            effects: [...currentEffects]
-          });
-        }
-        
-        currentText = '';
-      };
-      
-      while (i < bbcode.length) {
-        if (bbcode[i] === '[') {
-          // 处理标签
-          pushTextTokens();
-          
-          let tagEnd = bbcode.indexOf(']', i);
-          if (tagEnd === -1) break;
-          
-          const fullTag = bbcode.substring(i + 1, tagEnd);
-          i = tagEnd + 1;
-          
-          // 判断是开标签还是闭标签
-          if (fullTag.startsWith('/')) {
-            // 闭标签处理...
-          } else {
-            // 开标签
-            let tagName = fullTag;
-            let attributes = {};
+        const pushTextTokens = () => {
+            if (currentText.length === 0) return;
             
-            // 特殊处理 [tag=value] 格式
-            if (fullTag.includes('=') && !fullTag.includes(' ')) {
-              const eqIndex = fullTag.indexOf('=');
-              tagName = fullTag.substring(0, eqIndex);
-              const attrValue = fullTag.substring(eqIndex + 1);
-              attributes = { value: attrValue };
-            } 
-            // 处理 [tag name=value] 格式
-            else if (fullTag.includes(' ')) {
-              const spaceIndex = fullTag.indexOf(' ');
-              tagName = fullTag.substring(0, spaceIndex);
-              const attrString = fullTag.substring(spaceIndex + 1);
-              const eqIndex = attrString.indexOf('=');
-              
-              if (eqIndex !== -1) {
-                const attrName = attrString.substring(0, eqIndex);
-                let attrValue = attrString.substring(eqIndex + 1);
-                
-                // 去除引号
-                if (attrValue.startsWith('"') && attrValue.endsWith('"')) {
-                  attrValue = attrValue.substring(1, attrValue.length - 1);
-                } else if (attrValue.startsWith("'") && attrValue.endsWith("'")) {
-                  attrValue = attrValue.substring(1, attrValue.length - 1);
-                }
-                
-                attributes[attrName] = attrValue;
-              }
+            for (const char of currentText) {
+                tokens.push({
+                    char: char,
+                    effects: [...currentEffects]
+                });
             }
             
-            tagName = tagName.toLowerCase();
-            
-            // 创建效果对象
-            const effect = {
-              effect: tagName,
-              attributes: attributes
-            };
-            
-            // 添加到当前效果和栈中
-            currentEffects.push(effect);
-            stack.push({
-              tag: tagName,
-              effect: effect
-            });
-          }
-        } else {
-          // 普通文本
-          currentText += bbcode[i];
-          i++;
+            currentText = '';
+        };
+        
+        while (i < bbcode.length) {
+            if (bbcode[i] === '[') {
+                // 处理标签
+                pushTextTokens();
+                
+                let tagEnd = bbcode.indexOf(']', i);
+                if (tagEnd === -1) break;
+                
+                const fullTag = bbcode.substring(i + 1, tagEnd);
+                i = tagEnd + 1;
+                
+                // 判断是开标签还是闭标签
+                if (fullTag.startsWith('/')) {
+                    // 闭标签 - 只移除匹配的标签
+                    const tagName = fullTag.substring(1).toLowerCase();
+                    
+                    // 查找最近匹配的开标签
+                    let lastIndex = -1;
+                    for (let j = stack.length - 1; j >= 0; j--) {
+                        if (stack[j].tag === tagName) {
+                            lastIndex = j;
+                            break;
+                        }
+                    }
+                    
+                    if (lastIndex !== -1) {
+                        // 记录要移除的标签ID
+                        const removedId = stack[lastIndex].id;
+                        
+                        // 移除栈中从lastIndex开始的所有标签
+                        const removed = stack.splice(lastIndex);
+                        
+                        // 只移除匹配ID的效果
+                        currentEffects = currentEffects.filter(eff => 
+                            eff.id !== removedId
+                        );
+                    }
+                } else {
+                    // 开标签
+                    let tagName = fullTag;
+                    let attributes = {};
+                    tagId++;  // 生成新的唯一ID
+                    
+                    // 特殊处理 [tag=value] 格式
+                    if (fullTag.includes('=') && !fullTag.includes(' ')) {
+                        const eqIndex = fullTag.indexOf('=');
+                        tagName = fullTag.substring(0, eqIndex);
+                        const attrValue = fullTag.substring(eqIndex + 1);
+                        attributes = { value: attrValue };
+                    } 
+                    // 处理 [tag name=value] 格式
+                    else if (fullTag.includes(' ')) {
+                        const spaceIndex = fullTag.indexOf(' ');
+                        tagName = fullTag.substring(0, spaceIndex);
+                        const attrString = fullTag.substring(spaceIndex + 1);
+                        const eqIndex = attrString.indexOf('=');
+                        
+                        if (eqIndex !== -1) {
+                            const attrName = attrString.substring(0, eqIndex);
+                            let attrValue = attrString.substring(eqIndex + 1);
+                            
+                            // 去除引号
+                            if (attrValue.startsWith('"') && attrValue.endsWith('"')) {
+                                attrValue = attrValue.substring(1, attrValue.length - 1);
+                            } else if (attrValue.startsWith("'") && attrValue.endsWith("'")) {
+                                attrValue = attrValue.substring(1, attrValue.length - 1);
+                            }
+                            
+                            attributes[attrName] = attrValue;
+                        }
+                    }
+                    
+                    tagName = tagName.toLowerCase();
+                    
+                    // 创建效果对象（包含唯一ID）
+                    const effect = {
+                        id: tagId,       // 唯一标识符
+                        effect: tagName,
+                        attributes: attributes
+                    };
+                    
+                    // 添加到当前效果和栈中
+                    currentEffects.push(effect);
+                    stack.push({
+                        id: tagId,
+                        tag: tagName,
+                        effect: effect
+                    });
+                }
+            } else {
+                // 普通文本
+                currentText += bbcode[i];
+                i++;
+            }
         }
-      }
-      
-      // 处理剩余文本
-      pushTextTokens();
-      
-      return tokens;
+        
+        // 处理剩余文本
+        pushTextTokens();
+        
+        return tokens;
     }
   }
   
