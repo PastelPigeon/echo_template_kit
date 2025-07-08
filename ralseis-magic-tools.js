@@ -137,43 +137,65 @@
     }
     
     getGlyphData(args) {
-      const char = args.CHAR;
-      const color = args.COLOR;
-      const size = Number(args.SIZE) || 100;
-      const fontData = args.FONTSVGDATA;
-      
-      if (!fontData || !char) {
-        return '';
-      }
-      
-      // 尝试解析字体数据
-      const parser = new DOMParser();
-      const xmlDoc = parser.parseFromString(fontData, 'text/xml');
-      
-      // 查找匹配的字符
-      const glyphs = xmlDoc.getElementsByTagName('glyph');
-      let glyphPath = '';
-      
-      for (let glyph of glyphs) {
-        const unicode = glyph.getAttribute('unicode');
-        if (unicode === char) {
-          glyphPath = glyph.getAttribute('d') || '';
-          break;
+        const char = args.CHAR;
+        const color = args.COLOR;
+        const size = Number(args.SIZE) || 100;
+        const fontData = args.FONTSVGDATA;
+        
+        if (!fontData || !char) return '';
+        
+        // 解析字体数据
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(fontData, 'text/xml');
+        
+        // 获取字体元数据
+        const fontFace = xmlDoc.querySelector('font-face');
+        const fontElement = xmlDoc.querySelector('font');
+        
+        // 提取字体属性
+        const unitsPerEm = fontFace ? parseInt(fontFace.getAttribute('units-per-em') || '1000') : 1000;
+        const ascent = fontFace ? parseInt(fontFace.getAttribute('ascent') || '800') : 800;
+        const descent = fontFace ? Math.abs(parseInt(fontFace.getAttribute('descent') || '200')) : 200;
+        const horizAdvX = fontElement ? parseInt(fontElement.getAttribute('horiz-adv-x') || unitsPerEm) : unitsPerEm;
+        
+        // 计算缩放比例
+        const scale = unitsPerEm / 1000;
+        
+        // 获取字形路径
+        const glyphs = xmlDoc.getElementsByTagName('glyph');
+        let glyphPath = '';
+        
+        for (let glyph of glyphs) {
+            const unicode = glyph.getAttribute('unicode');
+            if (unicode === char) {
+                glyphPath = glyph.getAttribute('d') || '';
+                break;
+            }
         }
-      }
-      
-      if (!glyphPath) {
-        return '';
-      }
-      
-      // 创建SVG路径
-      const svg = `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -200 1000 1000" width="${size}" height="${size}">
-          <path d="${glyphPath}" fill="${color}" transform="scale(1 -1) translate(0 -800)"/>
-        </svg>
-      `;
-      
-      return svg;
+        
+        if (!glyphPath) return '';
+        
+        // 计算 ViewBox
+        const viewBoxHeight = ascent + descent;
+        const viewBox = `0 0 ${horizAdvX} ${viewBoxHeight}`;
+        
+        // 计算缩放比例以适配字体大小
+        const scaleFactor = size / unitsPerEm;
+        
+        // 创建 SVG 路径
+        const svg = `
+            <svg width="${horizAdvX * scaleFactor}" 
+                height="${viewBoxHeight * scaleFactor}" 
+                viewBox="${viewBox}"
+                preserveAspectRatio="xMinYMin meet">
+                <g transform="scale(${scaleFactor} ${scaleFactor})">
+                    <path d="${glyphPath}" fill="${color}" 
+                          transform="translate(0, ${ascent}) scale(1, -1)"/>
+                </g>
+            </svg>
+        `;
+        
+        return svg;
     }
     
     getCostumeIndex(args) {
