@@ -238,7 +238,6 @@
             opcode: 'power',
             blockType: Scratch.BlockType.REPORTER,
             text: '计算 [A] 的 [B] 次方',
-            iconURI: blockIcons.power,
             arguments: {
               A: {
                 type: Scratch.ArgumentType.NUMBER,
