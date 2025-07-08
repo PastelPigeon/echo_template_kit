@@ -184,7 +184,8 @@
         
         // 创建 SVG 路径
         const svg = `
-            <svg width="${horizAdvX * scaleFactor}" 
+            <svg xmlns="http://www.w3.org/2000/svg" 
+                width="${horizAdvX * scaleFactor}" 
                 height="${viewBoxHeight * scaleFactor}" 
                 viewBox="${viewBox}"
                 preserveAspectRatio="xMinYMin meet">
