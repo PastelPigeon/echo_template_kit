@@ -14,6 +14,117 @@
     getScriptType: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAoCAYAAAC8cqlMAAAAAXNSR0IArs4c6QAAAkdJREFUaEPtmD1LA0EQhvf+gYW9YOz8wEKwEawEwU4ULIKNhdpLTCMiNjHYq4WNpBAUO0GwEmwEC/GjM4K9hf/gJHt5JTvu7GzOi7k7c1Wyu7d77zw7s7MTKP4JG12ve4eOIUoNba6hP2j+0O95PMb4GOsYS2Ay27q5EQJxhoWp5VqI6PEf4bUHDKX6gxljnDSvUspldHenbatIC6ZZiEEGQkDC98MlTCBE55dIUAeV1mn0Gz6TeSFQnBQJakHqOx0jknshn9W61thXKvhsU3ZM14lkTgjnGxBCTR2XUAsZ5/kRO2rlVghHQnIUidSfE8mSEH0QSluK5lxcNsuN4wj5kvFxpMwJcd4jOCKwWBiar9erR1Y3KZRWzXtEENlSmt/hc3qCViL5EsLtbWkPg0jQtLDkI3S85IOUCL2Z/iDy74TQnOi3RLhklAvviRFJsxDjJjgxPKX/Xz1vOw9pWAzRqF0fQXSTTvrZkR39Hfcvt9b0ynaO6OiVByEGGekmyKYo+2U7yY2KtV0iIp3wYl2rJ6Rpd0QXqZKYXiI9IXbX6p6PpIiINXrdPQ3q9snRN8N00gnsm/rQ+SUS7dzZjftI5oVcPkZ1KzwSEUQrKQej0QqGwjpzY991smSq8bkRgoORWgxkkAudLheduRk6l05qRi7HzdtxH6FbLM1CnEUHakEI212Z1z9rC+tWMsXzA92+dXxh7ae+h0ESmdi5VpaEeGXBtIpSfo9eu1kct1p8+uxBt1cGom7cXzyqKMlELWkhhNluCfkCk8fkOIfQwpYAAAAASUVORK5CYII=",
     parseBBCode: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABQCAYAAACkoQMCAAAAAXNSR0IArs4c6QAAAhlJREFUeF7tm9FNwzAURV9mgU+YgCXaXcoUdJd2CSaAT5gFJCohodwn3fBcm5DTbzd2ju87cZxkij/0ezq9fDjDedzfT067Spurd7BkcIBJaAEGMEsKKWJziXFPeBnGn61bC7mLfAFTdAeJqRBI/ksprQFMa3c8H+Zn/XD8fbwqKSrJFzCdpEpiEtCA+U9gevjE1WwPIdvyBcxA0ZKYiFCiBcxawVR8UkmCmxjVrrWQpXwBEwGYiFD3VIABTG4wmZg1+sSVdEXIE2A0ZsAk8QMMYFwzXdqRGBJDYr4JcLlOwgCYkWAOuzurSPe3r1a709v8eO5/VQfqeKrd8eyNz74qASaZb8AAZtkCb3OJUQFRd9wuGMu8EeGK1pWq26+Sb2kHDzCh354EDGAu8sUxC54S7G68jx1cMSrhtS5NNcGu4M/v8482ZGIAk5QSYADzVYGUUrIKlGAqq1wlt4qQ1bhdSbcei9x2GDUYwESEu2E0apJITDJJgKmCUdEf9VqZu8WgnhKo0lTnZicGMBHhUiUxSR0CZotglMjcm0hXgqqd+/i0Ryqb3ysBpkKg+FyZxCQAAbMGMKOEfIWKnR1SiVb1a3/h1uNKBZgeBBbs1pGYZH8XML3AuPu77oMvt8Iq/XaRb2WALgTVrtIvYJJ3cAADmLwolduaJ6ayGnYH43rHXWxW+rVXvoBxpy0ieszcqAkhMUkQAJOA+QTh7WObEMJ+DgAAAABJRU5ErkJggg=="
   }
+
+    // 字体缓存系统
+  class FontCache {
+    constructor() {
+      this.cache = new Map();
+      this.maxCacheSize = 10; // 最大缓存字体数量
+    }
+    
+    // 计算字体数据的哈希值（简单实现）
+    hashFontData(fontData) {
+      let hash = 0;
+      if (fontData.length === 0) return hash;
+      
+      // 使用前100个字符和后100个字符计算哈希值
+      const prefix = fontData.substring(0, 100);
+      const suffix = fontData.substring(Math.max(0, fontData.length - 100));
+      const key = prefix + suffix;
+      
+      for (let i = 0; i < key.length; i++) {
+        const char = key.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash; // 转换为32位整数
+      }
+      return hash;
+    }
+    
+    // 解析字体数据并缓存结果
+    parseFont(fontData) {
+      const fontHash = this.hashFontData(fontData);
+      
+      // 如果缓存中存在，直接返回
+      if (this.cache.has(fontHash)) {
+        return this.cache.get(fontHash);
+      }
+      
+      // 解析字体数据
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(fontData, 'text/xml');
+      
+      // 获取字体元数据
+      const fontFace = xmlDoc.querySelector('font-face');
+      const fontElement = xmlDoc.querySelector('font');
+      
+      // 提取字体属性
+      const unitsPerEm = fontFace ? parseInt(fontFace.getAttribute('units-per-em') || '1000') : 1000;
+      const ascent = fontFace ? parseInt(fontFace.getAttribute('ascent') || '800') : 800;
+      const descent = fontFace ? Math.abs(parseInt(fontFace.getAttribute('descent') || '200')) : 200;
+      const horizAdvX = fontElement ? parseInt(fontElement.getAttribute('horiz-adv-x') || unitsPerEm) : unitsPerEm;
+      const fontFamily = fontFace ? fontFace.getAttribute('font-family') || 'Unknown' : 'Unknown';
+      
+      // 创建字形映射
+      const glyphMap = new Map();
+      const glyphs = xmlDoc.getElementsByTagName('glyph');
+      
+      for (let glyph of glyphs) {
+        const unicode = glyph.getAttribute('unicode');
+        if (unicode) {
+          glyphMap.set(unicode, {
+            path: glyph.getAttribute('d') || '',
+            horizAdvX: parseInt(glyph.getAttribute('horiz-adv-x') || horizAdvX)
+          });
+        }
+      }
+      
+      // 创建字体描述对象
+      const fontDescriptor = {
+        hash: fontHash,
+        unitsPerEm,
+        ascent,
+        descent,
+        horizAdvX,
+        fontFamily,
+        glyphMap
+      };
+      
+      // 添加到缓存
+      this.cache.set(fontHash, fontDescriptor);
+      
+      // 清理旧缓存（如果超过最大限制）
+      if (this.cache.size > this.maxCacheSize) {
+        // 删除最旧的缓存项
+        const oldestKey = this.cache.keys().next().value;
+        if (oldestKey) {
+          this.cache.delete(oldestKey);
+        }
+      }
+      
+      return fontDescriptor;
+    }
+    
+    // 获取字形数据（使用缓存）
+    getGlyph(fontData, char) {
+      const fontDescriptor = this.parseFont(fontData);
+      return fontDescriptor.glyphMap.get(char) || null;
+    }
+    
+    // 获取字体元数据（使用缓存）
+    getFontMetadata(fontData) {
+      const fontDescriptor = this.parseFont(fontData);
+      return {
+        unitsPerEm: fontDescriptor.unitsPerEm,
+        ascent: fontDescriptor.ascent,
+        descent: fontDescriptor.descent,
+        horizAdvX: fontDescriptor.horizAdvX,
+        fontFamily: fontDescriptor.fontFamily
+      };
+    }
+  }
+  
+  // 创建全局字体缓存
+  const fontCache = new FontCache();
   
   class RalseiMagicTools {
     getInfo() {
@@ -117,6 +228,12 @@
             blockType: Scratch.BlockType.REPORTER,
             text: '当前角色',
             disableMonitor: true
+          },
+          {
+            opcode: 'clearFontCache',
+            blockType: Scratch.BlockType.COMMAND,
+            text: '清除字体缓存',
+            iconURI: iconSVG
           }
         ],
         menus: {
@@ -135,67 +252,51 @@
     getCurrentTarget() {
       return '_current_';
     }
+
+    clearFontCache() {
+      fontCache.cache.clear();
+    }
     
     getGlyphData(args) {
-        const char = args.CHAR;
-        const color = args.COLOR;
-        const size = Number(args.SIZE) || 100;
-        const fontData = args.FONTSVGDATA;
-        
-        if (!fontData || !char) return '';
-        
-        // 解析字体数据
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(fontData, 'text/xml');
-        
-        // 获取字体元数据
-        const fontFace = xmlDoc.querySelector('font-face');
-        const fontElement = xmlDoc.querySelector('font');
-        
-        // 提取字体属性
-        const unitsPerEm = fontFace ? parseInt(fontFace.getAttribute('units-per-em') || '1000') : 1000;
-        const ascent = fontFace ? parseInt(fontFace.getAttribute('ascent') || '800') : 800;
-        const descent = fontFace ? Math.abs(parseInt(fontFace.getAttribute('descent') || '200')) : 200;
-        const horizAdvX = fontElement ? parseInt(fontElement.getAttribute('horiz-adv-x') || unitsPerEm) : unitsPerEm;
-        
-        // 计算缩放比例
-        const scale = unitsPerEm / 1000;
-        
-        // 获取字形路径
-        const glyphs = xmlDoc.getElementsByTagName('glyph');
-        let glyphPath = '';
-        
-        for (let glyph of glyphs) {
-            const unicode = glyph.getAttribute('unicode');
-            if (unicode === char) {
-                glyphPath = glyph.getAttribute('d') || '';
-                break;
-            }
-        }
-        
-        if (!glyphPath) return '';
-        
-        // 计算 ViewBox
-        const viewBoxHeight = ascent + descent;
-        const viewBox = `0 0 ${horizAdvX} ${viewBoxHeight}`;
-        
-        // 计算缩放比例以适配字体大小
-        const scaleFactor = size / unitsPerEm;
-        
-        // 创建 SVG 路径
-        const svg = `
-            <svg xmlns="http://www.w3.org/2000/svg" 
-                width="${horizAdvX * scaleFactor}" 
-                height="${viewBoxHeight * scaleFactor}" 
-                preserveAspectRatio="xMinYMin meet">
-                <g transform="scale(${scaleFactor} ${scaleFactor})">
-                    <path d="${glyphPath}" fill="${color}" 
-                          transform="translate(0, ${ascent}) scale(1, -1)"/>
-                </g>
-            </svg>
-        `;
-        
-        return svg;
+      const char = args.CHAR;
+      const color = args.COLOR;
+      const size = Number(args.SIZE) || 100;
+      const fontData = args.FONTSVGDATA;
+      
+      if (!fontData || !char) {
+        return '';
+      }
+      
+      // 使用字体缓存获取字形
+      const glyph = fontCache.getGlyph(fontData, char);
+      if (!glyph) {
+        return '';
+      }
+      
+      // 使用字体缓存获取元数据
+      const metadata = fontCache.getFontMetadata(fontData);
+      
+      // 计算 ViewBox
+      const viewBoxHeight = metadata.ascent + metadata.descent;
+      const viewBox = `0 0 ${glyph.horizAdvX || metadata.horizAdvX} ${viewBoxHeight}`;
+      
+      // 计算缩放比例以适配字体大小
+      const scaleFactor = size / metadata.unitsPerEm;
+      
+      // 创建 SVG 路径
+      const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" 
+             width="${(glyph.horizAdvX || metadata.horizAdvX) * scaleFactor}" 
+             height="${viewBoxHeight * scaleFactor}" 
+             preserveAspectRatio="xMinYMin meet">
+          <g transform="scale(${scaleFactor} ${scaleFactor})">
+            <path d="${glyph.path}" fill="${color}" 
+                  transform="translate(0, ${metadata.ascent}) scale(1, -1)"/>
+          </g>
+        </svg>
+      `;
+      
+      return svg;
     }
     
     getCostumeIndex(args) {
