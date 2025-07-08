@@ -232,8 +232,7 @@
           {
             opcode: 'clearFontCache',
             blockType: Scratch.BlockType.COMMAND,
-            text: '清除字体缓存',
-            iconURI: iconSVG
+            text: '清除字体缓存'
           }
         ],
         menus: {
