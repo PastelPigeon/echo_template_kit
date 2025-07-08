@@ -437,38 +437,23 @@
           
           // 判断是开标签还是闭标签
           if (fullTag.startsWith('/')) {
-            // 闭标签
-            const tagName = fullTag.substring(1).toLowerCase();
-            
-            // 查找最近匹配的开标签
-            let lastIndex = -1;
-            for (let j = stack.length - 1; j >= 0; j--) {
-              if (stack[j].tag === tagName) {
-                lastIndex = j;
-                break;
-              }
-            }
-            
-            if (lastIndex !== -1) {
-              // 移除所有在匹配开标签之后的标签
-              const removed = stack.splice(lastIndex);
-              
-              // 更新当前效果
-              currentEffects = currentEffects.filter(eff => 
-                !removed.some(r => r.tag === eff.effect)
-              );
-            }
+            // 闭标签处理...
           } else {
             // 开标签
-            const spaceIndex = fullTag.indexOf(' ');
-            const tagName = (spaceIndex !== -1) ? 
-              fullTag.substring(0, spaceIndex).toLowerCase() : 
-              fullTag.toLowerCase();
-            
+            let tagName = fullTag;
             let attributes = {};
             
-            // 提取属性
-            if (spaceIndex !== -1) {
+            // 特殊处理 [tag=value] 格式
+            if (fullTag.includes('=') && !fullTag.includes(' ')) {
+              const eqIndex = fullTag.indexOf('=');
+              tagName = fullTag.substring(0, eqIndex);
+              const attrValue = fullTag.substring(eqIndex + 1);
+              attributes = { value: attrValue };
+            } 
+            // 处理 [tag name=value] 格式
+            else if (fullTag.includes(' ')) {
+              const spaceIndex = fullTag.indexOf(' ');
+              tagName = fullTag.substring(0, spaceIndex);
               const attrString = fullTag.substring(spaceIndex + 1);
               const eqIndex = attrString.indexOf('=');
               
@@ -486,6 +471,8 @@
                 attributes[attrName] = attrValue;
               }
             }
+            
+            tagName = tagName.toLowerCase();
             
             // 创建效果对象
             const effect = {
