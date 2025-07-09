@@ -227,7 +227,7 @@
             opcode: 'startRecording',
             blockType: Scratch.BlockType.COMMAND,
             text: '开始录制作品，文件名[FILENAME]',
-            iconURI: iconURIs.recording,
+            blockIconURI: iconURIs.recording,
             arguments: {
               FILENAME: {
                 type: Scratch.ArgumentType.STRING,
@@ -239,7 +239,7 @@
             opcode: 'stopRecording',
             blockType: Scratch.BlockType.COMMAND,
             text: '停止录制并保存到路径[DIR]',
-            iconURI: iconURIs.recording,
+            blockIconURI: iconURIs.recording,
             arguments: {
               DIR: {
                 type: Scratch.ArgumentType.STRING,
