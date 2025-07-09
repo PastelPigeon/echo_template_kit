@@ -9,10 +9,11 @@
 
   const iconURIs = {
     getGlyphData: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAoCAYAAAC8cqlMAAAAAXNSR0IArs4c6QAAATdJREFUaEPtmTESgjAQRaGm8RqewTt4BXsrO1taOyt7r+AdPIPXsEmtI+MW7hh2NxtCsoQOkpC8//kbBtrGyNEa4WgqSG5OzuZI121eHzGcuw9rwOdSoSoIKAZKShXE/cGZ0PuoHSkWJNbCKeWlDokdKR4kFUBodtiOVBAqDEQ7NyvLcWSuR0qaFdKRCqLMRnUEK5DLI8V1xpuRxYHsDqdBtOv5+COe77o2Or59Re2IORBQGpwBQHw9e0eKBcGKS5XGmeKOj54RcyBdv+aKOdrP9Y+/1W/yfQQcKR5k/7xFcQLf5LLajjv3/Q6GOwXvI2ZAQBEMRCnqE4AaB/NFr1rmQABIGn5ulZq8auEJsgWBhWpf56UZokqhOCNmQfB/DEo5bbv0vwn7K0rxIFplU40nHUm1EO08by4C7imDTKO6AAAAAElFTkSuQmCC",
-    getCostumeIndex: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAoCAYAAAC8cqlMAAAAAXNSR0IArs4c6QAAAe1JREFUaEPlmD1OAzEQhbPdcgJajkJJT0WFECUXQKKORIkEKRGioqKn5Ci0nIDtEsnKgPY5jzfj/Ch2aKKsB2fefJ4fbzfZ9N/J8Ty05dd3F7InxhvZZLR3dUKIw/c/56EA3x69j+0LCZUT2Vsh5hiLCDgejbwX0y+hIJk/Is0JIaHbFgFGKkomJ9KKkF1HXuWOl0xGpH4hFppl0itBFillpyKu1uNEmhMCguwrRt5LxGu3Lhne2UUD9Drotdu6EJYDOCMpO5VLSrDKFUlEOciOnj1XDnrttJDC4S+bWuFsRHNKCT4gIYVlVyWnWldHlhGdkKk43NnVkVICSnNKHy38ZedVdbj+9Pqc7Prn05X2XjIHLEQQipJg2BghtDdicSLNCoGqhkTeZkOyuLjp0yd+V4n08PSYTNSksD6RZoSQKhbNFcsJ/D97rqoX6x8WZ/1eq3oh5KZY2hAZCdUgcajUnZ1UKzoqqCyG9d0LCd7ZUc/L8PGvxKv+bLSu7im4GateeY5UL8QpgEaIcDBC1meiMxfDi2TC0291QtSNjQm6nE/T0mt3lz5ZkqOdyhXmjz2nRKoXoqZPbznGiNu+7Dn2E0UA/ZRv43GM3n8hpCGyqpHdE5aGVqWsXxgB28dyB+0YEdb5ccKQ77VqEbIAS9/hfH/LcSkAAAAASUVORK5CYII=",
+    getCostumeIndex: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFQAAABYCAYAAABrqdC6AAAAAXNSR0IArs4c6QAAA7tJREFUeF7tnG2SnDAMROEGuWPOlTvmBrO1CaZqNKXtliwbM9P5C9jD4+nDhuy+bdtjW/Df4/Hzz9r3fcFfvW3fv0pACx/NckCRmfbeVzNVQAvt/B5qGaBRM1c1VUDfzdBeM1cz9XJDBbQoRKpBrmLqZYYK6CQzf+2//8309/GnZMbZfep0Q5GZAhr0SECDwNDpAooIBY97QFuot+Gqcmgbb1YuXSaHCmiRmW2Y0UBnmTrNUDZ3jgr5jwFqzRRQMvTZYiSgg4COAju62l+eQ72QF1DH1GgxssNU96Oji9NwQwWUzInsab1A7xb6yxsqoEbdKkOrwY6q9rcxVEAPAtGGHuXmqqr/doai/tMD+7FAq3NndX96O0MFFCWv4PHRQKuMrTZ1WJUX0KCB6PTZQLNtlQwFTzLaBQgoCo3jOAtWQAX0mUD0HVLv+cjU2xvaCwgVn+jraAElcyQLVkA/DSi7u2RzWzPFXo9M8z5/RNeNerdUvlIS0OL/mogM84oKa6i9Hn2gO9vU4YayVV1AyffwUUOa4dENaNRvIpOrqv10Q70bt4YKqPMOCZnRRI8CRK9I7LzRSCFXuC+nTTOUDcnsjaBidTugbLvk3XgvyOj1KPVExzv72qq/6CCg/5F2h/xVO/NZg9DmSu8KSkCdJ5Nto9JAkZnV1bvXSHs9KpICGiQ+HShrIHsfVX0mmq+BQvMhoNlc6oa8gB5VO/gHt4bn0Fm51BpXZSiKCJtrBRQRA8fTQHtTAGsMOg+t4VFEsLnTmwdVf9pQAeVy6nJArRnsBjUyk10hoQxwO0PfDmhvaHtPmM2NXrVmcx+ahx0HmWqPN3NfQl5AoyifcyvMoVWAkTlejqve8c8ainLnubJC+6ECylV3Gmg78SqwyNCs+bnA3jZkKgx5AX1GTwOtMhA9edYoO46X+9B42ZyJ7sPbjToNFVAW4c/GTmub2JVMlZnVKyMrnP0wY3of+rFAPfGrUwLKfZ6p7HVVudMWIc/Uy9qmXlOXB/pw1PM+L8yl7terWDDR+arM9NbqXht55lAB5R4ZG/rD2iZkeO/ni2w3wOF6XQFla4aAHsSRgfSDGbU54vVpqIuI5taWM70loWcaAhg9Tlf5tPrH++x2PVoD934KfhugqKqhvowFaudBpiIz2U0dz0QkgBdp6d0mr+j0/kDW1NsBRbmHPZ590h5YFiTK1dE+E50PcygLzJsoGup2nLcDitoEBBxdzx5HOZodx3tgyLyoGHQOzf6g7A2jYlg97hmy5mu7KNAvchCsKLgNJDYAAAAASUVORK5CYII=",
     addGradient: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAoCAYAAAC8cqlMAAAAAXNSR0IArs4c6QAAAa1JREFUaEPtWMuNwjAQdYqgjz3sgSboAFFDtIUgakB0QBMcOGwfW0RWGA04g8fzyWS1NskFIXtsv/f8Zibpgv8z3JbcXPdx5fPnF+zQ+W/1XHGOxasHMgKA2Z9bGU9FFiAe3lkUSVgsXqm/8oqHItUBiQemHqgb3H1Pshc11USuJqgtIMD8z+k7Mno5HOOvVpF1v4txq+2HSwegVqQ5IHDBQRlglvMINX9q5TcrUgOQrKmlHuAU4catWS2nSPVAVIWtULFHQ/i9ZKqylJdSRZoBAkyqAAnudFYhzis4mUC9CiFkExTpEekV+PdAgBGowFIGE+ayIQ7r6RRpAcjIK8CglGmveZjIy+FYLN6lwWj6FoBEUtb9LgLimJZ6SDsvIdKsSBtApErgNC1Nx9o4ThlSrrcBkvm2O3pTpJSxxs2miPVA1jh3INRBhuHe/Xfd/bZSLQ4ohedDNqPW5+qK2iPVAOFMrgUCCuC42RWpHggHAFdkq2mtcXh/bP6HR5oBkmQFVW+lrdA4O8F/aUdApeGXrGVVRnsgKwFiIJnutPjxWtvNTpg/rfsNIVQB5Bfa65w4jZiUNwAAAABJRU5ErkJggg==",
     getScriptType: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAoCAYAAAC8cqlMAAAAAXNSR0IArs4c6QAAAkdJREFUaEPtmD1LA0EQhvf+gYW9YOz8wEKwEawEwU4ULIKNhdpLTCMiNjHYq4WNpBAUO0GwEmwEC/GjM4K9hf/gJHt5JTvu7GzOi7k7c1Wyu7d77zw7s7MTKP4JG12ve4eOIUoNba6hP2j+0O95PMb4GOsYS2Ay27q5EQJxhoWp5VqI6PEf4bUHDKX6gxljnDSvUspldHenbatIC6ZZiEEGQkDC98MlTCBE55dIUAeV1mn0Gz6TeSFQnBQJakHqOx0jknshn9W61thXKvhsU3ZM14lkTgjnGxBCTR2XUAsZ5/kRO2rlVghHQnIUidSfE8mSEH0QSluK5lxcNsuN4wj5kvFxpMwJcd4jOCKwWBiar9erR1Y3KZRWzXtEENlSmt/hc3qCViL5EsLtbWkPg0jQtLDkI3S85IOUCL2Z/iDy74TQnOi3RLhklAvviRFJsxDjJjgxPKX/Xz1vOw9pWAzRqF0fQXSTTvrZkR39Hfcvt9b0ynaO6OiVByEGGekmyKYo+2U7yY2KtV0iIp3wYl2rJ6Rpd0QXqZKYXiI9IXbX6p6PpIiINXrdPQ3q9snRN8N00gnsm/rQ+SUS7dzZjftI5oVcPkZ1KzwSEUQrKQej0QqGwjpzY991smSq8bkRgoORWgxkkAudLheduRk6l05qRi7HzdtxH6FbLM1CnEUHakEI212Z1z9rC+tWMsXzA92+dXxh7ae+h0ESmdi5VpaEeGXBtIpSfo9eu1kct1p8+uxBt1cGom7cXzyqKMlELWkhhNluCfkCk8fkOIfQwpYAAAAASUVORK5CYII=",
-    parseBBCode: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABQCAYAAACkoQMCAAAAAXNSR0IArs4c6QAAAhlJREFUeF7tm9FNwzAURV9mgU+YgCXaXcoUdJd2CSaAT5gFJCohodwn3fBcm5DTbzd2ju87cZxkij/0ezq9fDjDedzfT067Spurd7BkcIBJaAEGMEsKKWJziXFPeBnGn61bC7mLfAFTdAeJqRBI/ksprQFMa3c8H+Zn/XD8fbwqKSrJFzCdpEpiEtCA+U9gevjE1WwPIdvyBcxA0ZKYiFCiBcxawVR8UkmCmxjVrrWQpXwBEwGYiFD3VIABTG4wmZg1+sSVdEXIE2A0ZsAk8QMMYFwzXdqRGBJDYr4JcLlOwgCYkWAOuzurSPe3r1a709v8eO5/VQfqeKrd8eyNz74qASaZb8AAZtkCb3OJUQFRd9wuGMu8EeGK1pWq26+Sb2kHDzCh354EDGAu8sUxC54S7G68jx1cMSrhtS5NNcGu4M/v8482ZGIAk5QSYADzVYGUUrIKlGAqq1wlt4qQ1bhdSbcei9x2GDUYwESEu2E0apJITDJJgKmCUdEf9VqZu8WgnhKo0lTnZicGMBHhUiUxSR0CZotglMjcm0hXgqqd+/i0Ryqb3ysBpkKg+FyZxCQAAbMGMKOEfIWKnR1SiVb1a3/h1uNKBZgeBBbs1pGYZH8XML3AuPu77oMvt8Iq/XaRb2WALgTVrtIvYJJ3cAADmLwolduaJ6ayGnYH43rHXWxW+rVXvoBxpy0ieszcqAkhMUkQAJOA+QTh7WObEMJ+DgAAAABJRU5ErkJggg=="
+    parseBBCode: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABQCAYAAACkoQMCAAAAAXNSR0IArs4c6QAAAhlJREFUeF7tm9FNwzAURV9mgU+YgCXaXcoUdJd2CSaAT5gFJCohodwn3fBcm5DTbzd2ju87cZxkij/0ezq9fDjDedzfT067Spurd7BkcIBJaAEGMEsKKWJziXFPeBnGn61bC7mLfAFTdAeJqRBI/ksprQFMa3c8H+Zn/XD8fbwqKSrJFzCdpEpiEtCA+U9gevjE1WwPIdvyBcxA0ZKYiFCiBcxawVR8UkmCmxjVrrWQpXwBEwGYiFD3VIABTG4wmZg1+sSVdEXIE2A0ZsAk8QMMYFwzXdqRGBJDYr4JcLlOwgCYkWAOuzurSPe3r1a709v8eO5/VQfqeKrd8eyNz74qASaZb8AAZtkCb3OJUQFRd9wuGMu8EeGK1pWq26+Sb2kHDzCh354EDGAu8sUxC54S7G68jx1cMSrhtS5NNcGu4M/v8482ZGIAk5QSYADzVYGUUrIKlGAqq1wlt4qQ1bhdSbcei9x2GDUYwESEu2E0apJITDJJgKmCUdEf9VqZu8WgnhKo0lTnZicGMBHhUiUxSR0CZotglMjcm0hXgqqd+/i0Ryqb3ysBpkKg+FyZxCQAAbMGMKOEfIWKnR1SiVb1a3/h1uNKBZgeBBbs1pGYZH8XML3AuPu77oMvt8Iq/XaRb2WALgTVrtIvYJJ3cAADmLwolduaJ6ayGnYH43rHXWxW+rVXvoBxpy0ieszcqAkhMUkQAJOA+QTh7WObEMJ+DgAAAABJRU5ErkJggg==",
+    recording: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAoCAYAAAC8cqlMAAAAAXNSR0IArs4c6QAAAe1JREFUaEPlmD1OAzEQhbPdcgJajkJJT0WFECUXQKKORIkEKRGioqKn5Ci0nIDtEsnKgPY5jzfj/Ch2aKKsB2fefJ4fbzfZ9N/J8Ty05dd3F7InxhvZZLR3dUKIw/c/56EA3x69j+0LCZUT2Vsh5hiLCDgejbwX0y+hIJk/Is0JIaHbFgFGKkomJ9KKkF1HXuWOl0xGpH4hFppl0itBFillpyKu1uNEmhMCguwrRt5LxGu3Lhne2UUD9Drotdu6EJYDOCMpO5VLSrDKFUlEOciOnj1XDnrttJDC4S+bWuFsRHNKCT4gIYVlVyWnWldHlhGdkKk43NnVkVICSnNKHy38ZedVdbj+9Pqc7Prn05X2XjIHLEQQipJg2BghtDdicSLNCoGqhkTeZkOyuLjp0yd+V4n08PSYTNSksD6RZoSQKhbNFcsJ/D97rqoX6x8WZ/1eq3oh5KZY2hAZCdUgcajUnZ1UKzoqqCyG9d0LCd7ZUc/L8PGvxKv+bLSu7im4GateeY5UL8QpgEaIcDBC1meiMxfDi2TC0291QtSNjQm6nE/T0mt3lz5ZkqOdyhXmjz2nRKoXoqZPbznGiNu+7Dn2E0UA/ZRv43GM3n8hpCGyqpHdE5aGVqWsXxgB28dyB+0YEdb5ccKQ77VqEbIAS9/hfH/LcSkAAAAASUVORK5CYII="
   }
 
     // 字体缓存系统
@@ -222,6 +223,30 @@
               }
             }
           },
+          {
+            opcode: 'startRecording',
+            blockType: Scratch.BlockType.COMMAND,
+            text: '开始录制作品，文件名[FILENAME]',
+            iconURI: iconURIs.recording,
+            arguments: {
+              FILENAME: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: 'my_recording'
+              }
+            }
+          },
+          {
+            opcode: 'stopRecording',
+            blockType: Scratch.BlockType.COMMAND,
+            text: '停止录制并保存到路径[DIR]',
+            iconURI: iconURIs.recording,
+            arguments: {
+              DIR: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: '下载'
+              }
+            }
+          },
           '---',
           {
             opcode: 'getCurrentTarget',
@@ -248,7 +273,19 @@
                 defaultValue: 3
               }
             }
-          }
+          },
+          {
+            opcode: 'isRecording',
+            blockType: Scratch.BlockType.BOOLEAN,
+            text: '正在录制？',
+            disableMonitor: true
+          },
+          {
+            opcode: 'recordingTime',
+            blockType: Scratch.BlockType.REPORTER,
+            text: '录制时间(秒)',
+            disableMonitor: true
+          },
         ],
         menus: {
           TARGET_MENU: {
@@ -681,6 +718,192 @@
       
       // 使用Math.pow计算次方
       return Math.pow(base, exponent);
+    }
+
+    startRecording(args) {
+      if (this.isRecording) {
+        console.warn('已经在录制中');
+        return;
+      }
+      
+      this.fileName = Scratch.Cast.toString(args.FILENAME);
+      this.recordedChunks = [];
+      
+      // 获取项目舞台的canvas元素
+      const stage = document.querySelector('canvas[class*="stage-wrapper"]');
+      if (!stage) {
+        console.error('无法找到舞台canvas元素');
+        return;
+      }
+      
+      // 获取音频上下文（如果项目有声音）
+      const audioContext = vm.runtime.audioEngine.audioContext;
+      
+      // 创建媒体流
+      const stream = stage.captureStream(30); // 30 FPS
+      
+      // 添加音频轨道
+      if (audioContext) {
+        const audioDestination = audioContext.createMediaStreamDestination();
+        const audioTrack = audioDestination.stream.getAudioTracks()[0];
+        stream.addTrack(audioTrack);
+      }
+      
+      // 创建MediaRecorder
+      try {
+        this.mediaRecorder = new MediaRecorder(stream, {
+          mimeType: 'video/webm;codecs=vp9,opus',
+          videoBitsPerSecond: 2500000 // 2.5 Mbps
+        });
+        
+        // 处理数据可用事件
+        this.mediaRecorder.ondataavailable = (event) => {
+          if (event.data.size > 0) {
+            this.recordedChunks.push(event.data);
+          }
+        };
+        
+        // 处理录制停止事件
+        this.mediaRecorder.onstop = () => {
+          this.saveRecording();
+        };
+        
+        // 开始录制
+        this.mediaRecorder.start(1000); // 每1秒收集一次数据
+        this.isRecording = true;
+        this.recordingStartTime = Date.now();
+        
+        // 启动计时器
+        this.recordingTimer = setInterval(() => {
+          // 更新UI或执行其他操作
+        }, 1000);
+        
+        console.log('开始录制');
+      } catch (e) {
+        console.error('无法开始录制:', e);
+        this.isRecording = false;
+      }
+    }
+    
+    stopRecording(args) {
+      if (!this.isRecording) {
+        console.warn('没有正在进行的录制');
+        return;
+      }
+      
+      this.savePath = Scratch.Cast.toString(args.DIR);
+      
+      // 停止录制
+      this.mediaRecorder.stop();
+      this.isRecording = false;
+      clearInterval(this.recordingTimer);
+      
+      // 停止所有流
+      this.mediaRecorder.stream.getTracks().forEach(track => track.stop());
+      
+      console.log('停止录制');
+    }
+    
+    isRecording() {
+      return this.isRecording;
+    }
+    
+    recordingTime() {
+      if (!this.isRecording) {
+        return 0;
+      }
+      return (Date.now() - this.recordingStartTime) / 1000;
+    }
+    
+    // 保存录制内容
+    saveRecording() {
+      if (this.recordedChunks.length === 0) {
+        console.error('没有录制数据');
+        return;
+      }
+      
+      // 创建Blob
+      const blob = new Blob(this.recordedChunks, {
+        type: 'video/webm'
+      });
+      
+      // 转换webm到mp4
+      this.convertToMP4(blob)
+        .then(mp4Blob => {
+          // 创建下载链接
+          const url = URL.createObjectURL(mp4Blob);
+          const a = document.createElement('a');
+          a.style.display = 'none';
+          a.href = url;
+          a.download = `${this.fileName}.mp4`;
+          document.body.appendChild(a);
+          
+          // 触发下载
+          a.click();
+          
+          // 清理
+          setTimeout(() => {
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+          }, 100);
+          
+          console.log('录制已保存为MP4');
+        })
+        .catch(error => {
+          console.error('转换失败:', error);
+          // 如果转换失败，直接保存为webm
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.style.display = 'none';
+          a.href = url;
+          a.download = `${this.fileName}.webm`;
+          document.body.appendChild(a);
+          a.click();
+          setTimeout(() => {
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+          }, 100);
+        });
+    }
+    
+    // 将webm转换为mp4
+    async convertToMP4(webmBlob) {
+      // 使用FFmpeg.wasm进行转换
+      if (typeof FFmpeg === 'undefined') {
+        // 动态加载FFmpeg.wasm
+        await this.loadFFmpeg();
+      }
+      
+      const ffmpeg = new FFmpeg();
+      await ffmpeg.load();
+      
+      // 将Blob写入内存
+      const inputName = 'input.webm';
+      await ffmpeg.writeFile(inputName, new Uint8Array(await webmBlob.arrayBuffer()));
+      
+      // 执行转换
+      await ffmpeg.exec(['-i', inputName, 'output.mp4']);
+      
+      // 读取结果
+      const data = await ffmpeg.readFile('output.mp4');
+      
+      return new Blob([data.buffer], { type: 'video/mp4' });
+    }
+    
+    // 动态加载FFmpeg.wasm
+    async loadFFmpeg() {
+      return new Promise((resolve, reject) => {
+        if (typeof FFmpeg !== 'undefined') {
+          resolve();
+          return;
+        }
+        
+        const script = document.createElement('script');
+        script.src = 'https://unpkg.com/@ffmpeg/ffmpeg@0.12.4/dist/ffmpeg.min.js';
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
     }
   }
   
