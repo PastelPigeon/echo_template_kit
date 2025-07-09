@@ -128,6 +128,12 @@
   const fontCache = new FontCache();
   
   class RalseiMagicTools {
+    constructor() {
+      // 添加录制状态变量
+      this.isRecording = false;
+      this.recordingStartTime = 0;
+    }
+
     getInfo() {
       return {
         id: 'ralsemagictools',
@@ -736,23 +742,13 @@
         return;
       }
       
-      // 获取音频上下文（如果项目有声音）
-      const audioContext = vm.runtime.audioEngine.audioContext;
-      
       // 创建媒体流
       const stream = stage.captureStream(30); // 30 FPS
-      
-      // 添加音频轨道
-      if (audioContext) {
-        const audioDestination = audioContext.createMediaStreamDestination();
-        const audioTrack = audioDestination.stream.getAudioTracks()[0];
-        stream.addTrack(audioTrack);
-      }
       
       // 创建MediaRecorder
       try {
         this.mediaRecorder = new MediaRecorder(stream, {
-          mimeType: 'video/webm;codecs=vp9,opus',
+          mimeType: 'video/webm;codecs=vp9',
           videoBitsPerSecond: 2500000 // 2.5 Mbps
         });
         
@@ -763,20 +759,10 @@
           }
         };
         
-        // 处理录制停止事件
-        this.mediaRecorder.onstop = () => {
-          this.saveRecording();
-        };
-        
         // 开始录制
         this.mediaRecorder.start(1000); // 每1秒收集一次数据
         this.isRecording = true;
         this.recordingStartTime = Date.now();
-        
-        // 启动计时器
-        this.recordingTimer = setInterval(() => {
-          // 更新UI或执行其他操作
-        }, 1000);
         
         console.log('开始录制');
       } catch (e) {
@@ -785,26 +771,26 @@
       }
     }
     
-    stopRecording(args) {
-      if (!this.isRecording) {
+    stopRecording() {
+      if (!this.isRecording || !this.mediaRecorder) {
         console.warn('没有正在进行的录制');
         return;
       }
       
-      this.savePath = Scratch.Cast.toString(args.DIR);
-      
       // 停止录制
       this.mediaRecorder.stop();
       this.isRecording = false;
-      clearInterval(this.recordingTimer);
       
       // 停止所有流
       this.mediaRecorder.stream.getTracks().forEach(track => track.stop());
       
+      // 保存录制内容
+      this.saveRecording();
+      
       console.log('停止录制');
     }
     
-    isRecording() {
+     isRecording() {
       return this.isRecording;
     }
     
@@ -815,9 +801,9 @@
       return (Date.now() - this.recordingStartTime) / 1000;
     }
     
-    // 保存录制内容
+    // 保存录制内容 (直接保存为webm)
     saveRecording() {
-      if (this.recordedChunks.length === 0) {
+      if (!this.recordedChunks || this.recordedChunks.length === 0) {
         console.error('没有录制数据');
         return;
       }
@@ -827,83 +813,24 @@
         type: 'video/webm'
       });
       
-      // 转换webm到mp4
-      this.convertToMP4(blob)
-        .then(mp4Blob => {
-          // 创建下载链接
-          const url = URL.createObjectURL(mp4Blob);
-          const a = document.createElement('a');
-          a.style.display = 'none';
-          a.href = url;
-          a.download = `${this.fileName}.mp4`;
-          document.body.appendChild(a);
-          
-          // 触发下载
-          a.click();
-          
-          // 清理
-          setTimeout(() => {
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-          }, 100);
-          
-          console.log('录制已保存为MP4');
-        })
-        .catch(error => {
-          console.error('转换失败:', error);
-          // 如果转换失败，直接保存为webm
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.style.display = 'none';
-          a.href = url;
-          a.download = `${this.fileName}.webm`;
-          document.body.appendChild(a);
-          a.click();
-          setTimeout(() => {
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-          }, 100);
-        });
-    }
-    
-    // 将webm转换为mp4
-    async convertToMP4(webmBlob) {
-      // 使用FFmpeg.wasm进行转换
-      if (typeof FFmpeg === 'undefined') {
-        // 动态加载FFmpeg.wasm
-        await this.loadFFmpeg();
-      }
+      // 创建下载链接
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = `${this.fileName}.webm`;
+      document.body.appendChild(a);
       
-      const ffmpeg = new FFmpeg();
-      await ffmpeg.load();
+      // 触发下载
+      a.click();
       
-      // 将Blob写入内存
-      const inputName = 'input.webm';
-      await ffmpeg.writeFile(inputName, new Uint8Array(await webmBlob.arrayBuffer()));
+      // 清理
+      setTimeout(() => {
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }, 100);
       
-      // 执行转换
-      await ffmpeg.exec(['-i', inputName, 'output.mp4']);
-      
-      // 读取结果
-      const data = await ffmpeg.readFile('output.mp4');
-      
-      return new Blob([data.buffer], { type: 'video/mp4' });
-    }
-    
-    // 动态加载FFmpeg.wasm
-    async loadFFmpeg() {
-      return new Promise((resolve, reject) => {
-        if (typeof FFmpeg !== 'undefined') {
-          resolve();
-          return;
-        }
-        
-        const script = document.createElement('script');
-        script.src = 'https://unpkg.com/@ffmpeg/ffmpeg@0.12.4/dist/ffmpeg.min.js';
-        script.onload = resolve;
-        script.onerror = reject;
-        document.head.appendChild(script);
-      });
+      console.log('录制已保存为WEBM');
     }
   }
   
