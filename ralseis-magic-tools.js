@@ -736,7 +736,7 @@
       this.recordedChunks = [];
       
       // 获取项目舞台的canvas元素
-      const stage = document.querySelector('canvas[class*="stage-wrapper"]');
+      const stage = document.querySelector('canvas');
       if (!stage) {
         console.error('无法找到舞台canvas元素');
         return;
