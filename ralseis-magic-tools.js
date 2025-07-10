@@ -130,12 +130,17 @@
   class RalseiMagicTools {
     constructor() {
       // 录制状态变量
-      this.isRecording = false;
+      this.recordingState = false;
       this.mediaRecorder = null;
-      this.recordedChunks = [];
       this.recordingStartTime = 0;
       this.recordingTimer = null;
       this.fileName = 'recording';
+      
+      // 用于存储录制的帧
+      this.recordedFrames = [];
+      this.recordingInterval = null;
+      this.audioContext = null;
+      this.audioDestination = null;
     }
 
     getInfo() {
@@ -170,20 +175,22 @@
             }
           },
           {
-            opcode: 'getCostumeIndex',
-            blockType: Scratch.BlockType.REPORTER,
-            text: '名为[COSTUME]的造型在[TARGET]角色中的编号',
-            blockIconURI: iconURIs.getCostumeIndex,
+            opcode: 'startRecording',
+            blockType: Scratch.BlockType.COMMAND,
+            text: '开始录制作品，文件名[FILENAME]',
+            blockIconURI: iconURIs.recording,
             arguments: {
-              COSTUME: {
+              FILENAME: {
                 type: Scratch.ArgumentType.STRING,
-                defaultValue: '造型1'
-              },
-              TARGET: {
-                type: Scratch.ArgumentType.STRING,
-                menu: 'TARGET_MENU'
+                defaultValue: 'my_recording'
               }
             }
+          },
+          {
+            opcode: 'stopRecording',
+            blockType: Scratch.BlockType.COMMAND,
+            text: '停止录制并保存',
+            blockIconURI: iconURIs.recording
           },
           {
             opcode: 'addGradient',
@@ -234,22 +241,20 @@
             }
           },
           {
-            opcode: 'startRecording',
-            blockType: Scratch.BlockType.COMMAND,
-            text: '开始录制作品，文件名[FILENAME]',
-            blockIconURI: iconURIs.recording,
+            opcode: 'getCostumeIndex',
+            blockType: Scratch.BlockType.REPORTER,
+            text: '名为[COSTUME]的造型在[TARGET]角色中的编号',
+            blockIconURI: iconURIs.getCostumeIndex,
             arguments: {
-              FILENAME: {
+              COSTUME: {
                 type: Scratch.ArgumentType.STRING,
-                defaultValue: 'my_recording'
+                defaultValue: '造型1'
+              },
+              TARGET: {
+                type: Scratch.ArgumentType.STRING,
+                menu: 'TARGET_MENU'
               }
             }
-          },
-          {
-            opcode: 'stopRecording',
-            blockType: Scratch.BlockType.COMMAND,
-            text: '停止录制并保存',
-            blockIconURI: iconURIs.recording
           },
           '---',
           {
@@ -725,13 +730,13 @@
     }
 
     startRecording(args) {
-      if (this.isRecording) {
+      if (this.recordingState) {
         console.warn('已经在录制中');
         return;
       }
       
       this.fileName = Scratch.Cast.toString(args.FILENAME);
-      this.recordedChunks = [];
+      this.recordedFrames = [];
       
       // 获取项目舞台的canvas元素
       const stage = this.findStageCanvas();
@@ -740,60 +745,46 @@
         return;
       }
       
-      // 创建媒体流
-      const stream = this.createMediaStream(stage);
-      if (!stream) {
-        console.error('无法创建媒体流');
-        return;
-      }
+      // 初始化音频系统
+      this.initAudioSystem();
       
-      // 创建并配置MediaRecorder
-      if (!this.setupMediaRecorder(stream)) {
-        console.error('无法创建媒体录制器');
-        return;
-      }
+      // 开始录制循环
+      this.startRecordingLoop(stage);
       
-      // 开始录制
-      this.mediaRecorder.start(1000); // 每1秒收集一次数据
-      this.isRecording = true;
+      this.recordingState = true;
       this.recordingStartTime = Date.now();
       
       console.log('开始录制');
     }
     
     stopRecording() {
-      if (!this.isRecording) {
+      if (!this.recordingState) {
         console.warn('没有正在进行的录制');
         return;
       }
       
-      // 停止录制
-      this.mediaRecorder.stop();
-      this.isRecording = false;
+      // 停止录制循环
+      this.stopRecordingLoop();
       
-      if (this.recordingTimer) {
-        clearInterval(this.recordingTimer);
-        this.recordingTimer = null;
-      }
+      // 保存录制内容
+      this.saveRecording();
       
-      // 停止所有流
-      this.mediaRecorder.stream.getTracks().forEach(track => track.stop());
-      
+      this.recordingState = false;
       console.log('停止录制');
     }
     
     isRecording() {
-      return this.isRecording;
+      return this.recordingState;
     }
     
     recordingTime() {
-      if (!this.isRecording) {
+      if (!this.recordingState) {
         return 0;
       }
       return ((Date.now() - this.recordingStartTime) / 1000).toFixed(2);
     }
     
-    // ===== 辅助方法 =====
+    // ===== 核心录制方法 =====
     
     findStageCanvas() {
       // 尝试多种方式查找舞台canvas
@@ -802,129 +793,215 @@
              document.querySelector('canvas');
     }
     
-    createMediaStream(stage) {
-      try {
-        // 创建视频流
-        const stream = stage.captureStream(30); // 30 FPS
-        
-        // 尝试添加音频（如果可用）
-        this.addAudioToStream(stream);
-        
-        return stream;
-      } catch (e) {
-        console.error('创建媒体流失败:', e);
-        return null;
-      }
-    }
-    
-    addAudioToStream(stream) {
+    initAudioSystem() {
       try {
         const audioEngine = vm.runtime.audioEngine;
         if (audioEngine && audioEngine.audioContext) {
-          const audioDestination = audioEngine.audioContext.createMediaStreamDestination();
-          const audioTrack = audioDestination.stream.getAudioTracks()[0];
-          
-          if (audioTrack) {
-            stream.addTrack(audioTrack);
-            console.log('已添加音频轨道');
-          }
+          this.audioContext = audioEngine.audioContext;
+          this.audioDestination = this.audioContext.createMediaStreamDestination();
         }
       } catch (e) {
-        console.warn('无法添加音频:', e);
+        console.warn('无法初始化音频系统:', e);
       }
     }
     
-    setupMediaRecorder(stream) {
-      // 确定浏览器支持的mimeType
-      const mimeType = this.getSupportedMimeType();
-      if (!mimeType) {
-        console.error('浏览器不支持任何WebM格式');
-        return false;
-      }
+    startRecordingLoop(stage) {
+      // 设置帧率 (30 FPS)
+      const frameInterval = 1000 / 30; // 33ms per frame
       
+      // 开始录制循环
+      this.recordingInterval = setInterval(() => {
+        // 捕获当前帧
+        this.captureFrame(stage);
+        
+        // 捕获音频数据
+        if (this.audioDestination) {
+          this.captureAudio();
+        }
+      }, frameInterval);
+    }
+    
+    captureFrame(stage) {
       try {
-        this.mediaRecorder = new MediaRecorder(stream, {
-          mimeType: mimeType,
-          videoBitsPerSecond: 2500000 // 2.5 Mbps
-        });
+        // 创建离屏Canvas用于处理帧
+        const offscreenCanvas = document.createElement('canvas');
+        offscreenCanvas.width = stage.width;
+        offscreenCanvas.height = stage.height;
         
-        // 处理数据可用事件
-        this.mediaRecorder.ondataavailable = (event) => {
-          if (event.data && event.data.size > 0) {
-            this.recordedChunks.push(event.data);
+        const ctx = offscreenCanvas.getContext('2d');
+        ctx.drawImage(stage, 0, 0);
+        
+        // 将Canvas转换为Blob
+        offscreenCanvas.toBlob(blob => {
+          if (blob) {
+            this.recordedFrames.push({
+              type: 'video',
+              timestamp: Date.now(),
+              data: blob
+            });
           }
-        };
-        
-        // 处理录制停止事件
-        this.mediaRecorder.onstop = () => {
-          this.saveWebMRecording();
-        };
-        
-        // 处理错误事件
-        this.mediaRecorder.onerror = (event) => {
-          console.error('录制错误:', event.error);
-          this.isRecording = false;
-        };
-        
-        return true;
+        }, 'image/webp', 0.8); // 使用WebP格式，质量80%
       } catch (e) {
-        console.error('创建MediaRecorder失败:', e);
-        return false;
+        console.error('捕获帧失败:', e);
       }
     }
     
-    getSupportedMimeType() {
-      // 按优先级列出支持的mimeType
-      const options = [
-        'video/webm;codecs=vp9,opus',
-        'video/webm;codecs=vp9',
-        'video/webm;codecs=vp8,opus',
-        'video/webm;codecs=vp8',
-        'video/webm'
-      ];
-      
-      // 检查浏览器支持哪种格式
-      for (const option of options) {
-        if (MediaRecorder.isTypeSupported(option)) {
-          return option;
+    captureAudio() {
+      try {
+        // 获取当前音频数据
+        if (this.audioDestination && this.audioDestination.stream) {
+          const audioTrack = this.audioDestination.stream.getAudioTracks()[0];
+          if (audioTrack) {
+            const recorder = new MediaRecorder(this.audioDestination.stream, {
+              mimeType: 'audio/webm;codecs=opus',
+              bitsPerSecond: 64000
+            });
+            
+            const audioChunks = [];
+            recorder.ondataavailable = event => {
+              if (event.data.size > 0) {
+                audioChunks.push(event.data);
+              }
+            };
+            
+            recorder.onstop = () => {
+              const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+              this.recordedFrames.push({
+                type: 'audio',
+                timestamp: Date.now(),
+                data: audioBlob
+              });
+            };
+            
+            recorder.start();
+            setTimeout(() => recorder.stop(), 100); // 捕获100ms音频片段
+          }
         }
+      } catch (e) {
+        console.warn('捕获音频失败:', e);
       }
-      
-      return null;
     }
     
-    // 保存WebM录制内容
-    saveWebMRecording() {
-      if (this.recordedChunks.length === 0) {
+    stopRecordingLoop() {
+      if (this.recordingInterval) {
+        clearInterval(this.recordingInterval);
+        this.recordingInterval = null;
+      }
+    }
+    
+    // 保存录制内容
+    async saveRecording() {
+      if (this.recordedFrames.length === 0) {
         console.error('没有录制数据');
         return;
       }
       
-      // 创建Blob
-      const blob = new Blob(this.recordedChunks, {
-        type: 'video/webm'
+      try {
+        // 创建视频容器
+        const videoContainer = document.createElement('div');
+        videoContainer.style.display = 'none';
+        document.body.appendChild(videoContainer);
+        
+        // 创建视频元素
+        const video = document.createElement('video');
+        video.width = this.recordedFrames[0].width || 480;
+        video.height = this.recordedFrames[0].height || 360;
+        video.controls = true;
+        videoContainer.appendChild(video);
+        
+        // 创建媒体源
+        const mediaSource = new MediaSource();
+        video.src = URL.createObjectURL(mediaSource);
+        
+        mediaSource.addEventListener('sourceopen', async () => {
+          // 创建视频和音频轨道
+          const videoBuffer = mediaSource.addSourceBuffer('video/webm; codecs="vp8"');
+          const audioBuffer = mediaSource.addSourceBuffer('audio/webm; codecs="opus"');
+          
+          // 处理录制帧
+          for (const frame of this.recordedFrames) {
+            if (frame.type === 'video') {
+              const arrayBuffer = await frame.data.arrayBuffer();
+              videoBuffer.appendBuffer(new Uint8Array(arrayBuffer));
+            } else if (frame.type === 'audio') {
+              const arrayBuffer = await frame.data.arrayBuffer();
+              audioBuffer.appendBuffer(new Uint8Array(arrayBuffer));
+            }
+          }
+          
+          // 结束媒体源
+          mediaSource.endOfStream();
+          
+          // 等待视频准备好
+          video.oncanplay = () => {
+            // 创建下载链接
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = video.src;
+            a.download = `${this.fileName}.webm`;
+            document.body.appendChild(a);
+            
+            // 触发下载
+            a.click();
+            
+            // 清理
+            setTimeout(() => {
+              document.body.removeChild(a);
+              document.body.removeChild(videoContainer);
+              URL.revokeObjectURL(video.src);
+            }, 100);
+            
+            console.log('录制已保存为WebM');
+          };
+        });
+      } catch (e) {
+        console.error('保存录制失败:', e);
+        // 回退方法：尝试保存为图片序列
+        this.saveAsImageSequence();
+      }
+    }
+    
+    // 备选保存方法：保存为图片序列
+    saveAsImageSequence() {
+      const zip = new JSZip();
+      let frameCount = 0;
+      
+      // 添加所有帧到ZIP
+      this.recordedFrames.filter(f => f.type === 'video').forEach((frame, index) => {
+        zip.file(`frame_${index.toString().padStart(5, '0')}.webp`, frame.data);
+        frameCount++;
       });
       
-      // 创建下载链接
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.style.display = 'none';
-      a.href = url;
-      a.download = `${this.fileName}.webm`;
-      document.body.appendChild(a);
-      
-      // 触发下载
-      a.click();
-      
-      // 清理
-      setTimeout(() => {
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-      }, 100);
-      
-      console.log('录制已保存为WebM');
+      // 生成ZIP文件
+      zip.generateAsync({ type: 'blob' }).then(content => {
+        // 创建下载链接
+        const url = URL.createObjectURL(content);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = `${this.fileName}_frames.zip`;
+        document.body.appendChild(a);
+        
+        // 触发下载
+        a.click();
+        
+        // 清理
+        setTimeout(() => {
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        }, 100);
+        
+        console.log(`录制已保存为${frameCount}帧图片序列`);
+      });
     }
   }
+
+    // 动态加载JSZip库（用于备选保存方法）
+    if (typeof JSZip === 'undefined') {
+      const script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+      document.head.appendChild(script);
+    }
   
   Scratch.extensions.register(new RalseiMagicTools());
 })(Scratch);
