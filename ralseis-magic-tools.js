@@ -287,18 +287,6 @@
                 defaultValue: 3
               }
             }
-          },
-          {
-            opcode: 'isRecording',
-            blockType: Scratch.BlockType.BOOLEAN,
-            text: '正在录制？',
-            disableMonitor: true
-          },
-          {
-            opcode: 'recordingTime',
-            blockType: Scratch.BlockType.REPORTER,
-            text: '录制时间(秒)',
-            disableMonitor: true
           }
         ],
         menus: {
