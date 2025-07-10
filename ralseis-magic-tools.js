@@ -13,7 +13,7 @@
     addGradient: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAoCAYAAAC8cqlMAAAAAXNSR0IArs4c6QAAAa1JREFUaEPtWMuNwjAQdYqgjz3sgSboAFFDtIUgakB0QBMcOGwfW0RWGA04g8fzyWS1NskFIXtsv/f8Zibpgv8z3JbcXPdx5fPnF+zQ+W/1XHGOxasHMgKA2Z9bGU9FFiAe3lkUSVgsXqm/8oqHItUBiQemHqgb3H1Pshc11USuJqgtIMD8z+k7Mno5HOOvVpF1v4txq+2HSwegVqQ5IHDBQRlglvMINX9q5TcrUgOQrKmlHuAU4catWS2nSPVAVIWtULFHQ/i9ZKqylJdSRZoBAkyqAAnudFYhzis4mUC9CiFkExTpEekV+PdAgBGowFIGE+ayIQ7r6RRpAcjIK8CglGmveZjIy+FYLN6lwWj6FoBEUtb9LgLimJZ6SDsvIdKsSBtApErgNC1Nx9o4ThlSrrcBkvm2O3pTpJSxxs2miPVA1jh3INRBhuHe/Xfd/bZSLQ4ohedDNqPW5+qK2iPVAOFMrgUCCuC42RWpHggHAFdkq2mtcXh/bP6HR5oBkmQFVW+lrdA4O8F/aUdApeGXrGVVRnsgKwFiIJnutPjxWtvNTpg/rfsNIVQB5Bfa65w4jZiUNwAAAABJRU5ErkJggg==",
     getScriptType: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAoCAYAAAC8cqlMAAAAAXNSR0IArs4c6QAAAkdJREFUaEPtmD1LA0EQhvf+gYW9YOz8wEKwEawEwU4ULIKNhdpLTCMiNjHYq4WNpBAUO0GwEmwEC/GjM4K9hf/gJHt5JTvu7GzOi7k7c1Wyu7d77zw7s7MTKP4JG12ve4eOIUoNba6hP2j+0O95PMb4GOsYS2Ay27q5EQJxhoWp5VqI6PEf4bUHDKX6gxljnDSvUspldHenbatIC6ZZiEEGQkDC98MlTCBE55dIUAeV1mn0Gz6TeSFQnBQJakHqOx0jknshn9W61thXKvhsU3ZM14lkTgjnGxBCTR2XUAsZ5/kRO2rlVghHQnIUidSfE8mSEH0QSluK5lxcNsuN4wj5kvFxpMwJcd4jOCKwWBiar9erR1Y3KZRWzXtEENlSmt/hc3qCViL5EsLtbWkPg0jQtLDkI3S85IOUCL2Z/iDy74TQnOi3RLhklAvviRFJsxDjJjgxPKX/Xz1vOw9pWAzRqF0fQXSTTvrZkR39Hfcvt9b0ynaO6OiVByEGGekmyKYo+2U7yY2KtV0iIp3wYl2rJ6Rpd0QXqZKYXiI9IXbX6p6PpIiINXrdPQ3q9snRN8N00gnsm/rQ+SUS7dzZjftI5oVcPkZ1KzwSEUQrKQej0QqGwjpzY991smSq8bkRgoORWgxkkAudLheduRk6l05qRi7HzdtxH6FbLM1CnEUHakEI212Z1z9rC+tWMsXzA92+dXxh7ae+h0ESmdi5VpaEeGXBtIpSfo9eu1kct1p8+uxBt1cGom7cXzyqKMlELWkhhNluCfkCk8fkOIfQwpYAAAAASUVORK5CYII=",
     parseBBCode: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABQCAYAAACkoQMCAAAAAXNSR0IArs4c6QAAAhlJREFUeF7tm9FNwzAURV9mgU+YgCXaXcoUdJd2CSaAT5gFJCohodwn3fBcm5DTbzd2ju87cZxkij/0ezq9fDjDedzfT067Spurd7BkcIBJaAEGMEsKKWJziXFPeBnGn61bC7mLfAFTdAeJqRBI/ksprQFMa3c8H+Zn/XD8fbwqKSrJFzCdpEpiEtCA+U9gevjE1WwPIdvyBcxA0ZKYiFCiBcxawVR8UkmCmxjVrrWQpXwBEwGYiFD3VIABTG4wmZg1+sSVdEXIE2A0ZsAk8QMMYFwzXdqRGBJDYr4JcLlOwgCYkWAOuzurSPe3r1a709v8eO5/VQfqeKrd8eyNz74qASaZb8AAZtkCb3OJUQFRd9wuGMu8EeGK1pWq26+Sb2kHDzCh354EDGAu8sUxC54S7G68jx1cMSrhtS5NNcGu4M/v8482ZGIAk5QSYADzVYGUUrIKlGAqq1wlt4qQ1bhdSbcei9x2GDUYwESEu2E0apJITDJJgKmCUdEf9VqZu8WgnhKo0lTnZicGMBHhUiUxSR0CZotglMjcm0hXgqqd+/i0Ryqb3ysBpkKg+FyZxCQAAbMGMKOEfIWKnR1SiVb1a3/h1uNKBZgeBBbs1pGYZH8XML3AuPu77oMvt8Iq/XaRb2WALgTVrtIvYJJ3cAADmLwolduaJ6ayGnYH43rHXWxW+rVXvoBxpy0ieszcqAkhMUkQAJOA+QTh7WObEMJ+DgAAAABJRU5ErkJggg==",
-    canvasAttributes: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAoCAYAAAC8cqlMAAAAAXNSR0IArs4c6QAAAe1JREFUaEPlmD1OAzEQhbPdcgJajkJJT0WFECUXQKKORIkEKRGioqKn5Ci0nIDtEsnKgPY5jzfj/Ch2aKKsB2fefJ4fbzfZ9N/J8Ty05dd3F7InxhvZZLR3dUKIw/c/56EA3x69j+0LCZUT2Vsh5hiLCDgejbwX0y+hIJk/Is0JIaHbFgFGKkomJ9KKkF1HXuWOl0xGpH4hFppl0itBFillpyKu1uNEmhMCguwrRt5LxGu3Lhne2UUD9Drotdu6EJYDOCMpO5VLSrDKFUlEOciOnj1XDnrttJDC4S+bWuFsRHNKCT4gIYVlVyWnWldHlhGdkKk43NnVkVICSnNKHy38ZedVdbj+9Pqc7Prn05X2XjIHLEQQipJg2BghtDdicSLNCoGqhkTeZkOyuLjp0yd+V4n08PSYTNSksD6RZoSQKhbNFcsJ/D97rqoX6x8WZ/1eq3oh5KZY2hAZCdUgcajUnZ1UKzoqqCyG9d0LCd7ZUc/L8PGvxKv+bLSu7im4GateeY5UL8QpgEaIcDBC1meiMxfDi2TC0291QtSNjQm6nE/T0mt3lz5ZkqOdyhXmjz2nRKoXoqZPbznGiNu+7Dn2E0UA/ZRv43GM3n8hpCGyqpHdE5aGVqWsXxgB28dyB+0YEdb5ccKQ77VqEbIAS9/hfH/LcSkAAAAASUVORK5CYII="
+    getCanvasAttr: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAoCAYAAAC8cqlMAAAAAXNSR0IArs4c6QAAAe1JREFUaEPlmD1OAzEQhbPdcgJajkJJT0WFECUXQKKORIkEKRGioqKn5Ci0nIDtEsnKgPY5jzfj/Ch2aKKsB2fefJ4fbzfZ9N/J8Ty05dd3F7InxhvZZLR3dUKIw/c/56EA3x69j+0LCZUT2Vsh5hiLCDgejbwX0y+hIJk/Is0JIaHbFgFGKkomJ9KKkF1HXuWOl0xGpH4hFppl0itBFillpyKu1uNEmhMCguwrRt5LxGu3Lhne2UUD9Drotdu6EJYDOCMpO5VLSrDKFUlEOciOnj1XDnrttJDC4S+bWuFsRHNKCT4gIYVlVyWnWldHlhGdkKk43NnVkVICSnNKHy38ZedVdbj+9Pqc7Prn05X2XjIHLEQQipJg2BghtDdicSLNCoGqhkTeZkOyuLjp0yd+V4n08PSYTNSksD6RZoSQKhbNFcsJ/D97rqoX6x8WZ/1eq3oh5KZY2hAZCdUgcajUnZ1UKzoqqCyG9d0LCd7ZUc/L8PGvxKv+bLSu7im4GateeY5UL8QpgEaIcDBC1meiMxfDi2TC0291QtSNjQm6nE/T0mt3lz5ZkqOdyhXmjz2nRKoXoqZPbznGiNu+7Dn2E0UA/ZRv43GM3n8hpCGyqpHdE5aGVqWsXxgB28dyB+0YEdb5ccKQ77VqEbIAS9/hfH/LcSkAAAAASUVORK5CYII="
   }
 
     // 字体缓存系统
@@ -184,6 +184,44 @@
             }
           },
           {
+            opcode: 'getCanvasAttribute',
+            blockType: Scratch.BlockType.REPORTER,
+            text: '获取舞台canvas的属性[ATTR]',
+            blockIconURI: iconURIs.getCanvasAttr,
+            arguments: {
+              ATTR: {
+                type: Scratch.ArgumentType.STRING,
+                menu: 'CANVAS_ATTRIBUTES',
+                defaultValue: 'width'
+              }
+            }
+          },
+          {
+            opcode: 'getCustomCanvasAttribute',
+            blockType: Scratch.BlockType.REPORTER,
+            text: '获取舞台canvas的自定义属性[ATTR]',
+            blockIconURI: iconURIs.getCanvasAttr,
+            arguments: {
+              ATTR: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: 'data-custom'
+              }
+            }
+          },
+          {
+            opcode: 'getCanvasComputedStyle',
+            blockType: Scratch.BlockType.REPORTER,
+            text: '获取舞台canvas的计算样式[PROP]',
+            blockIconURI: iconURIs.getCanvasAttr,
+            arguments: {
+              PROP: {
+                type: Scratch.ArgumentType.STRING,
+                menu: 'STYLE_PROPERTIES',
+                defaultValue: 'width'
+              }
+            }
+          },
+          {
             opcode: 'getScriptType',
             blockType: Scratch.BlockType.REPORTER,
             text: '判断字符[CHAR]的书写系统',
@@ -271,6 +309,36 @@
           DIRECTION_MENU: {
             acceptReporters: false,
             items: ['上', '下', '左', '右', '左上', '右上', '左下', '右下']
+          },
+          CANVAS_ATTRIBUTES: {
+            acceptReporters: false,
+            items: [
+              'width', 
+              'height', 
+              'id', 
+              'className', 
+              'offsetWidth', 
+              'offsetHeight',
+              'clientWidth',
+              'clientHeight',
+              'scrollWidth',
+              'scrollHeight'
+            ]
+          },
+          STYLE_PROPERTIES: {
+            acceptReporters: false,
+            items: [
+              'width', 
+              'height', 
+              'position', 
+              'display', 
+              'z-index', 
+              'opacity',
+              'background-color',
+              'border',
+              'box-shadow',
+              'transform'
+            ]
           }
         }
       };
@@ -694,6 +762,88 @@
       
       // 使用Math.pow计算次方
       return Math.pow(base, exponent);
+    }
+
+     // 获取舞台canvas元素（带缓存）
+    getStageCanvas() {
+      const now = Date.now();
+      
+      // 每5秒重新查找一次canvas，防止DOM变化
+      if (!this.stageCanvas || now - this.lastCanvasCheck > 5000) {
+        this.lastCanvasCheck = now;
+        
+        // 尝试多种方式查找舞台canvas
+        this.stageCanvas = 
+          document.querySelector('canvas.stage-wrapper') ||
+          document.querySelector('canvas[class*="stage"]') ||
+          document.querySelector('canvas[data-stage="true"]') ||
+          document.querySelector('canvas');
+        
+        // 如果找到canvas，添加自定义属性以便识别
+        if (this.stageCanvas) {
+          this.stageCanvas.setAttribute('data-ralsei-stage', 'true');
+        }
+      }
+      
+      return this.stageCanvas;
+    }
+    
+    getCanvasAttribute(args) {
+      const attrName = Scratch.Cast.toString(args.ATTR);
+      const canvas = this.getStageCanvas();
+      
+      if (!canvas) {
+        console.warn('找不到舞台canvas元素');
+        return '';
+      }
+      
+      // 处理特殊属性
+      switch(attrName) {
+        case 'className':
+          return canvas.className;
+        case 'offsetWidth':
+          return canvas.offsetWidth;
+        case 'offsetHeight':
+          return canvas.offsetHeight;
+        case 'clientWidth':
+          return canvas.clientWidth;
+        case 'clientHeight':
+          return canvas.clientHeight;
+        case 'scrollWidth':
+          return canvas.scrollWidth;
+        case 'scrollHeight':
+          return canvas.scrollHeight;
+        default:
+          // 直接获取标准属性
+          return canvas.getAttribute(attrName) || '';
+      }
+    }
+    
+    getCustomCanvasAttribute(args) {
+      const attrName = Scratch.Cast.toString(args.ATTR);
+      const canvas = this.getStageCanvas();
+      
+      if (!canvas) {
+        console.warn('找不到舞台canvas元素');
+        return '';
+      }
+      
+      // 获取自定义属性
+      return canvas.getAttribute(attrName) || '';
+    }
+    
+    getCanvasComputedStyle(args) {
+      const propName = Scratch.Cast.toString(args.PROP);
+      const canvas = this.getStageCanvas();
+      
+      if (!canvas) {
+        console.warn('找不到舞台canvas元素');
+        return '';
+      }
+      
+      // 获取计算样式
+      const style = window.getComputedStyle(canvas);
+      return style.getPropertyValue(propName) || '';
     }
   }
   
