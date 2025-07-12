@@ -139,6 +139,7 @@
       this.audioSource = null;
       this.audioStream = null;
       this.audioCaptureNode = null;
+      this.audioDestination = null;
 
       // 默认录制选项
       this.recordingOptions = {
@@ -941,13 +942,24 @@
             const audioEngine = vm.runtime.audioEngine;
             if (audioEngine && audioEngine.audioContext) {
               // 创建捕获节点
-              this.audioCaptureNode = audioEngine.audioContext.createMediaStreamDestination();
+              this.audioCaptureNode = audioEngine.audioContext.createGain();
+              this.audioDestination = audioEngine.audioContext.createMediaStreamDestination();
               
-              // 将主增益节点连接到捕获节点
-              audioEngine.masterGain.connect(this.audioCaptureNode);
+              // 连接音频引擎的输出到捕获节点
+              if (audioEngine.inputNode) {
+                // TurboWarp 1.8+ 版本
+                audioEngine.inputNode.connect(this.audioCaptureNode);
+              } else if (audioEngine.masterGain) {
+                // 旧版本TurboWarp
+                audioEngine.masterGain.connect(this.audioCaptureNode);
+              } else {
+                console.warn('无法找到音频引擎输出节点');
+              }
+              
+              this.audioCaptureNode.connect(this.audioDestination);
               
               // 获取音频流
-              this.audioStream = this.audioCaptureNode.stream;
+              this.audioStream = this.audioDestination.stream;
               
               // 合并视频和音频流
               combinedStream = new MediaStream([
@@ -962,13 +974,38 @@
           }
         }
 
-        // 初始化录制（其余代码保持不变）
+        // 初始化录制
         this.recordedChunks = [];
         this.mediaRecorder = new MediaRecorder(combinedStream, {
           mimeType: 'video/webm;codecs=vp9,opus'
         });
 
-        // ...（ondataavailable和onstop处理保持不变）
+        this.mediaRecorder.ondataavailable = event => {
+          if (event.data.size > 0) {
+            this.recordedChunks.push(event.data);
+          }
+        };
+
+        this.mediaRecorder.onstop = () => {
+          const blob = new Blob(this.recordedChunks, {
+            type: 'video/webm'
+          });
+
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.style.display = 'none';
+          a.href = url;
+          a.download = 'recording.webm';
+          document.body.appendChild(a);
+          a.click();
+          setTimeout(() => {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+          }, 100);
+
+          // 清理音频资源
+          this.cleanupAudio();
+        };
 
         this.mediaRecorder.start();
         this.recording = true;
@@ -978,22 +1015,38 @@
         console.error('录制启动失败:', error);
       }
     }
+    
+    cleanupAudio() {
+      if (this.audioCaptureNode) {
+        const audioEngine = vm.runtime.audioEngine;
+        if (audioEngine && audioEngine.audioContext) {
+          try {
+            if (audioEngine.inputNode) {
+              audioEngine.inputNode.disconnect(this.audioCaptureNode);
+            } else if (audioEngine.masterGain) {
+              audioEngine.masterGain.disconnect(this.audioCaptureNode);
+            }
+          } catch (e) {
+            console.warn('断开音频连接时出错:', e);
+          }
+          this.audioCaptureNode.disconnect();
+        }
+        this.audioCaptureNode = null;
+      }
+      
+      if (this.audioDestination) {
+        this.audioDestination = null;
+      }
+      
+      this.audioStream = null;
+    }
 
     stopRecording() {
       if (!this.recording || !this.mediaRecorder) return;
 
       this.mediaRecorder.stop();
       this.recording = false;
-      
-      // 断开音频捕获
-      if (this.audioCaptureNode) {
-        const audioEngine = vm.runtime.audioEngine;
-        if (audioEngine) {
-          audioEngine.masterGain.disconnect(this.audioCaptureNode);
-        }
-        this.audioCaptureNode = null;
-      }
-      this.audioStream = null;
+      this.cleanupAudio();
     }
 
     recordingDuration() {
