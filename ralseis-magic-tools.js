@@ -13,7 +13,8 @@
     addGradient: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAoCAYAAAC8cqlMAAAAAXNSR0IArs4c6QAAAa1JREFUaEPtWMuNwjAQdYqgjz3sgSboAFFDtIUgakB0QBMcOGwfW0RWGA04g8fzyWS1NskFIXtsv/f8Zibpgv8z3JbcXPdx5fPnF+zQ+W/1XHGOxasHMgKA2Z9bGU9FFiAe3lkUSVgsXqm/8oqHItUBiQemHqgb3H1Pshc11USuJqgtIMD8z+k7Mno5HOOvVpF1v4txq+2HSwegVqQ5IHDBQRlglvMINX9q5TcrUgOQrKmlHuAU4catWS2nSPVAVIWtULFHQ/i9ZKqylJdSRZoBAkyqAAnudFYhzis4mUC9CiFkExTpEekV+PdAgBGowFIGE+ayIQ7r6RRpAcjIK8CglGmveZjIy+FYLN6lwWj6FoBEUtb9LgLimJZ6SDsvIdKsSBtApErgNC1Nx9o4ThlSrrcBkvm2O3pTpJSxxs2miPVA1jh3INRBhuHe/Xfd/bZSLQ4ohedDNqPW5+qK2iPVAOFMrgUCCuC42RWpHggHAFdkq2mtcXh/bP6HR5oBkmQFVW+lrdA4O8F/aUdApeGXrGVVRnsgKwFiIJnutPjxWtvNTpg/rfsNIVQB5Bfa65w4jZiUNwAAAABJRU5ErkJggg==",
     getScriptType: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAoCAYAAAC8cqlMAAAAAXNSR0IArs4c6QAAAkdJREFUaEPtmD1LA0EQhvf+gYW9YOz8wEKwEawEwU4ULIKNhdpLTCMiNjHYq4WNpBAUO0GwEmwEC/GjM4K9hf/gJHt5JTvu7GzOi7k7c1Wyu7d77zw7s7MTKP4JG12ve4eOIUoNba6hP2j+0O95PMb4GOsYS2Ay27q5EQJxhoWp5VqI6PEf4bUHDKX6gxljnDSvUspldHenbatIC6ZZiEEGQkDC98MlTCBE55dIUAeV1mn0Gz6TeSFQnBQJakHqOx0jknshn9W61thXKvhsU3ZM14lkTgjnGxBCTR2XUAsZ5/kRO2rlVghHQnIUidSfE8mSEH0QSluK5lxcNsuN4wj5kvFxpMwJcd4jOCKwWBiar9erR1Y3KZRWzXtEENlSmt/hc3qCViL5EsLtbWkPg0jQtLDkI3S85IOUCL2Z/iDy74TQnOi3RLhklAvviRFJsxDjJjgxPKX/Xz1vOw9pWAzRqF0fQXSTTvrZkR39Hfcvt9b0ynaO6OiVByEGGekmyKYo+2U7yY2KtV0iIp3wYl2rJ6Rpd0QXqZKYXiI9IXbX6p6PpIiINXrdPQ3q9snRN8N00gnsm/rQ+SUS7dzZjftI5oVcPkZ1KzwSEUQrKQej0QqGwjpzY991smSq8bkRgoORWgxkkAudLheduRk6l05qRi7HzdtxH6FbLM1CnEUHakEI212Z1z9rC+tWMsXzA92+dXxh7ae+h0ESmdi5VpaEeGXBtIpSfo9eu1kct1p8+uxBt1cGom7cXzyqKMlELWkhhNluCfkCk8fkOIfQwpYAAAAASUVORK5CYII=",
     parseBBCode: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABQCAYAAACkoQMCAAAAAXNSR0IArs4c6QAAAhlJREFUeF7tm9FNwzAURV9mgU+YgCXaXcoUdJd2CSaAT5gFJCohodwn3fBcm5DTbzd2ju87cZxkij/0ezq9fDjDedzfT067Spurd7BkcIBJaAEGMEsKKWJziXFPeBnGn61bC7mLfAFTdAeJqRBI/ksprQFMa3c8H+Zn/XD8fbwqKSrJFzCdpEpiEtCA+U9gevjE1WwPIdvyBcxA0ZKYiFCiBcxawVR8UkmCmxjVrrWQpXwBEwGYiFD3VIABTG4wmZg1+sSVdEXIE2A0ZsAk8QMMYFwzXdqRGBJDYr4JcLlOwgCYkWAOuzurSPe3r1a709v8eO5/VQfqeKrd8eyNz74qASaZb8AAZtkCb3OJUQFRd9wuGMu8EeGK1pWq26+Sb2kHDzCh354EDGAu8sUxC54S7G68jx1cMSrhtS5NNcGu4M/v8482ZGIAk5QSYADzVYGUUrIKlGAqq1wlt4qQ1bhdSbcei9x2GDUYwESEu2E0apJITDJJgKmCUdEf9VqZu8WgnhKo0lTnZicGMBHhUiUxSR0CZotglMjcm0hXgqqd+/i0Ryqb3ysBpkKg+FyZxCQAAbMGMKOEfIWKnR1SiVb1a3/h1uNKBZgeBBbs1pGYZH8XML3AuPu77oMvt8Iq/XaRb2WALgTVrtIvYJJ3cAADmLwolduaJ6ayGnYH43rHXWxW+rVXvoBxpy0ieszcqAkhMUkQAJOA+QTh7WObEMJ+DgAAAABJRU5ErkJggg==",
-    getCanvasAttr: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAoCAYAAAC8cqlMAAAAAXNSR0IArs4c6QAAAe1JREFUaEPlmD1OAzEQhbPdcgJajkJJT0WFECUXQKKORIkEKRGioqKn5Ci0nIDtEsnKgPY5jzfj/Ch2aKKsB2fefJ4fbzfZ9N/J8Ty05dd3F7InxhvZZLR3dUKIw/c/56EA3x69j+0LCZUT2Vsh5hiLCDgejbwX0y+hIJk/Is0JIaHbFgFGKkomJ9KKkF1HXuWOl0xGpH4hFppl0itBFillpyKu1uNEmhMCguwrRt5LxGu3Lhne2UUD9Drotdu6EJYDOCMpO5VLSrDKFUlEOciOnj1XDnrttJDC4S+bWuFsRHNKCT4gIYVlVyWnWldHlhGdkKk43NnVkVICSnNKHy38ZedVdbj+9Pqc7Prn05X2XjIHLEQQipJg2BghtDdicSLNCoGqhkTeZkOyuLjp0yd+V4n08PSYTNSksD6RZoSQKhbNFcsJ/D97rqoX6x8WZ/1eq3oh5KZY2hAZCdUgcajUnZ1UKzoqqCyG9d0LCd7ZUc/L8PGvxKv+bLSu7im4GateeY5UL8QpgEaIcDBC1meiMxfDi2TC0291QtSNjQm6nE/T0mt3lz5ZkqOdyhXmjz2nRKoXoqZPbznGiNu+7Dn2E0UA/ZRv43GM3n8hpCGyqpHdE5aGVqWsXxgB28dyB+0YEdb5ccKQ77VqEbIAS9/hfH/LcSkAAAAASUVORK5CYII="
+    getCanvasAttr: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAoCAYAAAC8cqlMAAAAAXNSR0IArs4c6QAAAe1JREFUaEPlmD1OAzEQhbPdcgJajkJJT0WFECUXQKKORIkEKRGioqKn5Ci0nIDtEsnKgPY5jzfj/Ch2aKKsB2fefJ4fbzfZ9N/J8Ty05dd3F7InxhvZZLR3dUKIw/c/56EA3x69j+0LCZUT2Vsh5hiLCDgejbwX0y+hIJk/Is0JIaHbFgFGKkomJ9KKkF1HXuWOl0xGpH4hFppl0itBFillpyKu1uNEmhMCguwrRt5LxGu3Lhne2UUD9Drotdu6EJYDOCMpO5VLSrDKFUlEOciOnj1XDnrttJDC4S+bWuFsRHNKCT4gIYVlVyWnWldHlhGdkKk43NnVkVICSnNKHy38ZedVdbj+9Pqc7Prn05X2XjIHLEQQipJg2BghtDdicSLNCoGqhkTeZkOyuLjp0yd+V4n08PSYTNSksD6RZoSQKhbNFcsJ/D97rqoX6x8WZ/1eq3oh5KZY2hAZCdUgcajUnZ1UKzoqqCyG9d0LCd7ZUc/L8PGvxKv+bLSu7im4GateeY5UL8QpgEaIcDBC1meiMxfDi2TC0291QtSNjQm6nE/T0mt3lz5ZkqOdyhXmjz2nRKoXoqZPbznGiNu+7Dn2E0UA/ZRv43GM3n8hpCGyqpHdE5aGVqWsXxgB28dyB+0YEdb5ccKQ77VqEbIAS9/hfH/LcSkAAAAASUVORK5CYII=",
+    recording: "data:image/gif;base64,R0lGODlhOAA2APEAAAAAAEeCyb3Ayf///yH/C05FVFNDQVBFMi4wAwEAAAAh+QQJFAAEACwAAAAAOAA2AAAD/0i63AswyhmdvfjSPbP/hDSMZGmSEqg+0ema6fpBb11DckbbfInnGkBvOPgBHTuizXhUJJU9JvAJXQKaTiFqYhVtsSHtiNJtfbFP8o17bqbZL/X4ihYX4XcfXpp7e+d6f3dgWWVUMAABARRTdidyLhCKjCteh1FaEoqTFSCWjkM7mpsxM3YcqHuJm6x8SKepsXqsrXQ6oKKZuoCItKS2GIe5vMO9vovAt36yW5LIvqXBZnOxsM7Ota5hqUTVnJSv3KGx3x0W1wAC6gLVFOvsG4/JLJzv7RP28Yiv0Onrau7+dbo0qAG2X/k+SUhIhyCfg9mm5WkWgVOWN0GOIRO0DIbdRVjhVlGIKA/ir4/aRo38JazisR/gDK6KiM5KOYuVZrJ0SXDOTWQyDnK8pzOmKZIUve3UlvFXHKIcghYFRQ2qORUqqd6xugErT61co+aEFC1kKqlkOwWpBuasNLGEtnV9O9cNHj2vnpb1dLcNC71qc5YJaaXRYJk9CzaC68GtXcbK6mJIAAAh+QQJFAAEACwAAAAAOAA2AAAD/0i63A0wyhmdvfjSPbP/hDSMZGmSEqgu4umW6fpBb11DckbbPAzkmF2vhwNahENb0cgCJJ+DpREJVf6YISdqYm2NpEAkpRvxYbM+r2u8PYu5N/j3ynyr7eU2Fv9O5+cyFAEBVCZsL2AggoRaiHJrdIoRg4MthURaMTOTlJaNTzuaQQCUpYx+HKmfiQ4Qpp2rqrJmHq6vp4aZunO8uZu3uD69obu+o7altneyeJvIsJV/UcyxrA8b0apJzBrYjNpD3EefcxQC5wLUE+jppIzdJxzs6hLz7taX0wr16Gzm/e6SRdpHTg+/c/7WAXyFr9oVZY/4BDTV0A/BbNIkArNGMIPGM4GFJIDkJIoBhYu31JSbuKhkrXskC/rA+PHdCogQrdCcGC3QhJHM/Aj0KRKWOqGwiNI7lGvozaUbHDl1BpXpzG8Dj1V9dNVlN3FfHXrVqkpHxg11UpnlcMakWrId9nDV49bR2LXSaNWFdHcUmVZ5jfn8ey0foClvqZ6Uy1ZS4wsJAAA7"
   }
 
     // 字体缓存系统
@@ -128,6 +129,23 @@
   const fontCache = new FontCache();
   
   class RalseiMagicTools {
+    constructor() {
+      this.recording = false;
+      this.startTime = 0;
+      this.mediaRecorder = null;
+      this.recordedChunks = [];
+      this.audioContext = null;
+      this.audioDestination = null;
+      this.audioSource = null;
+      this.audioStream = null;
+
+      // 默认录制选项
+      this.recordingOptions = {
+        frameRate: 30,
+        recordAudio: false
+      };
+    }
+
     getInfo() {
       return {
         id: 'ralsemagictools',
@@ -261,6 +279,33 @@
               }
             }
           },
+          {
+            opcode: 'startRecording',
+            blockType: Scratch.BlockType.COMMAND,
+            text: '开始录制',
+            blockIconURI: iconURIs.recording
+          },
+          {
+            opcode: 'stopRecording',
+            blockType: Scratch.BlockType.COMMAND,
+            text: '结束录制',
+            blockIconURI: iconURIs.recording
+          },
+          {
+            opcode: 'setRecordingOption',
+            blockType: Scratch.BlockType.COMMAND,
+            text: '设置录制选项 [OPTION] 为 [VALUE]',
+            blockIconURI: iconURIs.recording,
+            arguments: {
+              OPTION: {
+                type: Scratch.ArgumentType.STRING,
+                menu: 'RECORDING_OPTIONS'
+              },
+              VALUE: {
+                type: Scratch.ArgumentType.STRING
+              }
+            }
+          },
           '---',
           {
             opcode: 'getCurrentTarget',
@@ -287,7 +332,17 @@
                 defaultValue: 3
               }
             }
-          }
+          },
+          {
+            opcode: 'recordingDuration',
+            blockType: Scratch.BlockType.REPORTER,
+            text: '录制时长',
+          },
+          {
+            opcode: 'isRecording',
+            blockType: Scratch.BlockType.BOOLEAN,
+            text: '正在录制？',
+          },
         ],
         menus: {
           TARGET_MENU: {
@@ -327,6 +382,17 @@
               'box-shadow',
               'transform'
             ]
+          },
+          RECORDING_OPTIONS: {
+            acceptReporters: true,
+            items: [{
+              text: '帧率',
+              value: 'frameRate'
+            },
+            {
+              text: '是否录制作品声音',
+              value: 'recordAudio'
+            }]
           }
         }
       };
@@ -762,9 +828,7 @@
         
         // 尝试多种方式查找舞台canvas
         this.stageCanvas = 
-          document.querySelector('canvas.stage-wrapper') ||
-          document.querySelector('canvas[class*="stage"]') ||
-          document.querySelector('canvas[data-stage="true"]') ||
+          document.querySelector('canvas.sc-canvas') ||
           document.querySelector('canvas');
         
         // 如果找到canvas，添加自定义属性以便识别
@@ -832,6 +896,137 @@
       // 获取计算样式
       const style = window.getComputedStyle(canvas);
       return style.getPropertyValue(propName) || '';
+    }
+
+    setRecordingOption(args) {
+      const option = args.OPTION;
+      const value = args.VALUE;
+
+      switch (option) {
+      case 'frameRate':
+        // 确保帧率在1-60之间
+        const frameRate = Math.max(1, Math.min(60, Number(value)));
+        if (!isNaN(frameRate)) {
+          this.recordingOptions.frameRate = frameRate;
+        }
+        break;
+
+      case 'recordAudio':
+        // 将字符串转换为布尔值
+        this.recordingOptions.recordAudio = (value === 'true' || value === true);
+        break;
+      }
+    }
+
+    async startRecording() {
+      if (this.recording) return;
+
+      const canvas = this.getStageCanvas();
+
+      if (!canvas) {
+        console.error('无法找到TurboWarp画布元素');
+        return;
+      }
+
+      try {
+        // 获取视频流
+        const videoStream = canvas.captureStream(this.recordingOptions.frameRate);
+        let combinedStream = videoStream;
+
+        // 如果需要录制音频
+        if (this.recordingOptions.recordAudio) {
+          try {
+            // 创建音频上下文
+            this.audioContext = new(window.AudioContext || window.webkitAudioContext)();
+
+            // 创建媒体流目标
+            this.audioDestination = this.audioContext.createMediaStreamDestination();
+
+            // 创建音频源（捕获系统音频）
+            this.audioSource = this.audioContext.createMediaStreamSource(await navigator.mediaDevices.getUserMedia({
+              audio: true,
+              video: false
+            }));
+
+            // 连接音频源到目标
+            this.audioSource.connect(this.audioDestination);
+
+            // 获取音频流
+            this.audioStream = this.audioDestination.stream;
+
+            // 合并视频和音频流
+            combinedStream = new MediaStream([...videoStream.getTracks(), ...this.audioStream.getAudioTracks()]);
+          } catch(error) {
+            console.error('音频捕获失败:', error);
+          }
+        }
+
+        // 初始化录制
+        this.recordedChunks = [];
+        this.mediaRecorder = new MediaRecorder(combinedStream, {
+          mimeType: 'video/webm;codecs=vp9,opus'
+        });
+
+        this.mediaRecorder.ondataavailable = event => {
+          if (event.data.size > 0) {
+            this.recordedChunks.push(event.data);
+          }
+        };
+
+        this.mediaRecorder.onstop = () => {
+          const blob = new Blob(this.recordedChunks, {
+            type: 'video/webm'
+          });
+
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.style.display = 'none';
+          a.href = url;
+          a.download = 'recording.webm';
+          document.body.appendChild(a);
+          a.click();
+          setTimeout(() => {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+          },
+          100);
+
+          // 清理音频资源
+          if (this.audioSource) {
+            this.audioSource.disconnect();
+            this.audioSource = null;
+          }
+          if (this.audioContext) {
+            this.audioContext.close();
+            this.audioContext = null;
+          }
+        };
+
+        this.mediaRecorder.start();
+        this.recording = true;
+        this.startTime = Date.now();
+
+      } catch(error) {
+        console.error('录制启动失败:', error);
+      }
+    }
+
+    stopRecording() {
+      if (!this.recording || !this.mediaRecorder) return;
+
+      this.mediaRecorder.stop();
+      this.recording = false;
+    }
+
+    recordingDuration() {
+      if (!this.recording) return 0;
+
+      const duration = (Date.now() - this.startTime) / 1000;
+      return duration.toFixed(2);
+    }
+
+    isRecording() {
+      return this.recording;
     }
   }
   
